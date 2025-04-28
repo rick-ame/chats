@@ -5,7 +5,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "tsx watch index.ts",
-    "build": "tsc -b && tsc-alias"
+    "build": "tsc -b && tsc-alias",
+    "start": "node dist/server/index.js"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
