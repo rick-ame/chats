@@ -1,26 +1,16 @@
-import axios from 'axios'
-import { FC, useEffect, useState } from 'react'
-import { AUTH, PREFIX } from 'shared/apis'
+import { FC } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import { Button } from '@/components/ui/button'
+import Auth from './pages/auth'
 
 const App: FC = () => {
-  const [msg, setMsg] = useState('')
-
-  useEffect(() => {
-    ;(async () => {
-      const { data } = await axios.post(`${PREFIX}${AUTH.signUp}`, {
-        username: 'Rick',
-      })
-      setMsg(data.message)
-    })()
-  }, [])
-
   return (
-    <div>
-      <p className="text-2xl font-bold text-blue-500">{msg}</p>
-      <Button>Click Me</Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="*" element={<Navigate to="/auth" />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

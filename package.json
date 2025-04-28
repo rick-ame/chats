@@ -10,6 +10,9 @@
   },
   "license": "MIT",
   "packageManager": "pnpm@10.9.0",
+  "dependencies": {
+    "zod": "^3.24.3"
+  },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
     "eslint": "^9.25.1",

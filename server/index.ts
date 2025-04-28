@@ -3,6 +3,10 @@ import 'dotenv/config'
 import express from 'express'
 import { AUTH, PREFIX } from 'shared/apis'
 
+import { logger } from '@/lib'
+
+const PORT = process.env.PORT || 3000
+
 const app = express()
 
 app.use(express.json())
@@ -14,4 +18,6 @@ app.post(`${PREFIX}${AUTH.signUp}`, (req, res) => {
   })
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(PORT, () => {
+  logger.info(`server is running at: ${PORT}!`)
+})
