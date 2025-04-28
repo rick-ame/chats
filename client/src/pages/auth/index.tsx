@@ -65,13 +65,13 @@ const Auth: FC = () => {
               <TabsList className="w-full bg-transparent">
                 <TabsTrigger
                   value="login"
-                  className="data-[state=active]:border-b-purple-500! rounded-b-none border-b-2 p-3 transition-all duration-300 data-[state=active]:font-semibold"
+                  className="data-[state=active]:border-b-purple-500! bg-transparent! rounded-b-none border-b-2 p-3 data-[state=active]:font-semibold"
                 >
                   Login
                 </TabsTrigger>
                 <TabsTrigger
                   value="signup"
-                  className="data-[state=active]:border-b-purple-500! rounded-b-none border-b-2 p-3 transition-all duration-300 data-[state=active]:font-semibold"
+                  className="data-[state=active]:border-b-purple-500! bg-transparent! rounded-b-none border-b-2 p-3 data-[state=active]:font-semibold"
                 >
                   Signup
                 </TabsTrigger>
@@ -114,7 +114,7 @@ const Auth: FC = () => {
                         </FormItem>
                       )}
                     />
-                    <Button className="w-full bg-purple-600 hover:bg-purple-500">
+                    <Button className="w-full bg-purple-600 text-white hover:bg-purple-500">
                       Log In
                     </Button>
                   </form>
@@ -174,7 +174,7 @@ const Auth: FC = () => {
                         </FormItem>
                       )}
                     />
-                    <Button className="w-full bg-purple-600 hover:bg-purple-500">
+                    <Button className="w-full bg-purple-600 text-white hover:bg-purple-500">
                       Sign Up
                     </Button>
                   </form>
