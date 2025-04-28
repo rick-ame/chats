@@ -3,7 +3,6 @@
   "type": "module",
   "scripts": {
     "clean": "pnpm -r clean",
-    "dev": "pnpm -r dev",
     "dev:client": "pnpm --filter client dev",
     "dev:server": "pnpm --filter server dev",
     "build": "pnpm -r build",
