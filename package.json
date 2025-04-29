@@ -6,7 +6,8 @@
     "dev:client": "pnpm --filter client dev",
     "dev:api": "pnpm --filter api dev",
     "build": "pnpm -r build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:vercel": "pnpm -r build:vercel"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.10.0",
