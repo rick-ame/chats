@@ -9,12 +9,18 @@
     "start": "node dist/server/index.js"
   },
   "dependencies": {
+    "argon2": "^0.43.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
     "tsc-alias": "^1.8.15",
     "tsx": "^4.19.3"
   }

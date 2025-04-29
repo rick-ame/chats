@@ -47,6 +47,9 @@ export default tseslint.config(
     },
     settings: {
       'import/resolver': {
+        typescript: {
+          project: 'client/tsconfig.app.json',
+        },
         alias: {
           map: [['', './client/public']],
         },

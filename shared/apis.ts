@@ -1,5 +1,6 @@
-export const PREFIX = '/api'
+export const prefix = '/api'
 
-export const AUTH = {
-  signUp: '/sign-up',
+export const enum AuthApi {
+  Signup = '/signup',
+  Login = '/login',
 }

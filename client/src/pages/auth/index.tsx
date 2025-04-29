@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FC } from 'react'
+import { AxiosError } from 'axios'
+import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { AuthApi } from 'shared/apis'
 import { loginSchema, signupSchema } from 'shared/zod-schemas'
 import { z } from 'zod'
 
 import login from '@/assets/login.png'
 import victory from '@/assets/victory.svg'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -16,20 +17,28 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { apiClient } from '@/lib/api-client'
+
+import AuthButton from './auth-button'
+
+type LoginForm = z.infer<typeof loginSchema>
+type SignupForm = z.infer<typeof signupSchema>
 
 const Auth: FC = () => {
-  const loginForm = useForm<z.infer<typeof loginSchema>>({
+  const [loading, setLoading] = useState(false)
+
+  const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   })
-  const onLogin = async (values: z.infer<typeof loginSchema>) => {
+  const onLogin = async (values: LoginForm) => {
     console.log(values)
   }
 
-  const signupForm = useForm<z.infer<typeof signupSchema>>({
+  const signupForm = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -37,8 +46,35 @@ const Auth: FC = () => {
       confirm: '',
     },
   })
-  const onSignup = async (values: z.infer<typeof signupSchema>) => {
-    console.log(values)
+  const onSignup = async (values: SignupForm) => {
+    try {
+      setLoading(true)
+      const res = await apiClient.post(AuthApi.Signup, values)
+      console.log(res)
+    } catch (error) {
+      if (error instanceof AxiosError && error.status === 400) {
+        const {
+          response: { data },
+        } = error as {
+          response: {
+            data: {
+              body: Record<string, { _errors: string[] } | undefined>
+            }
+          }
+        }
+        Object.keys(values).forEach((key) => {
+          const msg = data.body[key]?._errors[0]
+          if (msg) {
+            signupForm.setError(key as keyof SignupForm, {
+              type: 'zod',
+              message: msg,
+            })
+          }
+        })
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -114,9 +150,7 @@ const Auth: FC = () => {
                         </FormItem>
                       )}
                     />
-                    <Button className="w-full bg-purple-600 text-white hover:bg-purple-500">
-                      Log In
-                    </Button>
+                    <AuthButton loading={loading}>Log In</AuthButton>
                   </form>
                 </Form>
               </TabsContent>
@@ -174,9 +208,7 @@ const Auth: FC = () => {
                         </FormItem>
                       )}
                     />
-                    <Button className="w-full bg-purple-600 text-white hover:bg-purple-500">
-                      Sign Up
-                    </Button>
+                    <AuthButton loading={loading}>Sign Up</AuthButton>
                   </form>
                 </Form>
               </TabsContent>
