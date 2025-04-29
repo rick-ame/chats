@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:vercel": "tsc -b && vite build --outDir ../public"
+    "build": "tsc -b && vite build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

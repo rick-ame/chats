@@ -8,6 +8,6 @@
     /* Bundler mode */
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "../dist/api"
+    "outDir": "./dist"
   }
 }

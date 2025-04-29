@@ -2,12 +2,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf server/dist",
     "dev:client": "pnpm --filter client dev",
-    "dev:api": "pnpm --filter api dev",
+    "dev:server": "pnpm --filter server dev",
     "build": "pnpm -r build",
     "lint": "eslint .",
-    "build:vercel": "pnpm -r build:vercel"
+    "start": "pnpm clean && pnpm build && pnpm --filter server start"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.10.0",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
+    "@types/node": "^22.15.3",
     "eslint": "^9.25.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.3.4",

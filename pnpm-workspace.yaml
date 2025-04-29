@@ -1,6 +1,6 @@
 packages:
   - client
-  - api
+  - server
 
 publicHoistPattern:
   - '*eslint*'
