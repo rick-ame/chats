@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { AuthApi } from 'shared/apis'
+import { UserRes } from 'shared/models'
 import { loginSchema, signupSchema } from 'shared/zod-schemas'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -26,6 +28,7 @@ type SignupForm = z.infer<typeof signupSchema>
 
 const Auth: FC = () => {
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -37,12 +40,17 @@ const Auth: FC = () => {
   const onLogin = async (values: LoginForm) => {
     try {
       setLoading(true)
-      const res = await apiClient.post(AuthApi.Login, values)
-      console.log(res)
+      const res = await apiClient.post<UserRes>(AuthApi.Login, values)
+
+      if (res.data.profileSetup) {
+        navigate('/')
+      } else {
+        navigate('/profile')
+      }
     } catch (error) {
       handleError<{ message: string }>(error, (errorData) => {
         if (!(errorData instanceof z.ZodError)) {
-          toast(errorData.message)
+          toast.error(errorData.message)
         }
       })
     } finally {
@@ -61,9 +69,11 @@ const Auth: FC = () => {
   const onSignup = async (values: SignupForm) => {
     try {
       setLoading(true)
-      const res = await apiClient.post(AuthApi.Signup, values)
+      const res = await apiClient.post<UserRes>(AuthApi.Signup, values)
 
-      console.log(res)
+      console.log(res.data)
+
+      navigate('/profile')
     } catch (error) {
       handleError<{ body: SignupForm }>(error, (errorData) => {
         if (errorData instanceof z.ZodError) {
@@ -85,8 +95,8 @@ const Auth: FC = () => {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="text-foreground/90 grid min-h-[80vh] w-[90vw] rounded-3xl border-2 border-white bg-white p-10 shadow-2xl md:w-[80vw] lg:w-[70vw] xl:w-[60vw] xl:grid-cols-2 dark:border-black dark:bg-gray-900">
+    <div className="flex h-dvh items-center justify-center">
+      <div className="text-foreground/90 grid h-[80vh] min-h-[500px] w-[90vw] rounded-3xl border-2 border-white bg-white p-10 shadow-2xl md:w-[80vw] lg:w-[70vw] xl:w-[60vw] xl:grid-cols-2 dark:border-black dark:bg-gray-900">
         <div className="flex flex-col justify-center gap-10">
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center justify-center">

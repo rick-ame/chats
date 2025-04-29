@@ -1,15 +1,6 @@
 import { hash } from 'argon2'
 import { model, Schema } from 'mongoose'
-
-export interface User {
-  email: string
-  password: string
-  firstName?: string
-  lastName?: string
-  image?: string
-  color?: number
-  profileSetup: boolean
-}
+import { User } from 'shared/models'
 
 const userSchema = new Schema<User>(
   {

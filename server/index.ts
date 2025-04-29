@@ -8,6 +8,7 @@ import { prefix } from 'shared/apis'
 
 import { checkEnv, connectDB, logger, PORT } from './lib'
 import { routes as authRoutes } from './routes/auth'
+import { routes as userRoutes } from './routes/user'
 
 try {
   checkEnv()
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use(express.json())
 
 app.use(prefix, authRoutes)
+app.use(prefix, userRoutes)
 
 app.get('/*splat', (req, res) => {
   res.sendFile(path.join(staticFiles, 'index.html'))
