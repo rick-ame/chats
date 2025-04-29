@@ -2,12 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "pnpm -r clean",
+    "clean": "rimraf dist",
     "dev:client": "pnpm --filter client dev",
-    "dev:server": "pnpm --filter server dev",
+    "dev:api": "pnpm --filter api dev",
     "build": "pnpm -r build",
-    "lint": "eslint .",
-    "start": "pnpm --filter server start"
+    "lint": "eslint ."
   },
   "license": "MIT",
   "packageManager": "pnpm@10.10.0",

@@ -1,12 +1,10 @@
 {
-  "name": "server",
+  "name": "api",
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "clean": "rimraf dist",
     "dev": "tsx watch index.ts",
-    "build": "tsc -b && tsc-alias",
-    "start": "node dist/server/index.js"
+    "build": "tsc -b && tsc-alias"
   },
   "dependencies": {
     "argon2": "^0.43.0",

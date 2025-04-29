@@ -8,7 +8,7 @@
     /* Bundler mode */
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "./dist",
+    "outDir": "../dist",
 
     "paths": {
       "shared/*": ["../shared/*"],
