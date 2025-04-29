@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { apiClient, handleError } from '@/lib/api-client'
+import { useUserStore } from '@/store'
 
 import AuthButton from './auth-button'
 
@@ -29,6 +30,7 @@ type SignupForm = z.infer<typeof signupSchema>
 const Auth: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { setUserInfo } = useUserStore()
 
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -41,7 +43,7 @@ const Auth: FC = () => {
     try {
       setLoading(true)
       const res = await apiClient.post<UserRes>(AuthApi.Login, values)
-
+      setUserInfo(res.data)
       if (res.data.profileSetup) {
         navigate('/')
       } else {
@@ -70,9 +72,7 @@ const Auth: FC = () => {
     try {
       setLoading(true)
       const res = await apiClient.post<UserRes>(AuthApi.Signup, values)
-
-      console.log(res.data)
-
+      setUserInfo(res.data)
       navigate('/profile')
     } catch (error) {
       handleError<{ body: SignupForm }>(error, (errorData) => {

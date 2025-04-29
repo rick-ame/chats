@@ -33,7 +33,7 @@ const App: FC = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/auth" element={<Authed />}>
-                <Route element={<Auth />} />
+                <Route path="" element={<Auth />} />
               </Route>
               <Route path="/" element={<Private />}>
                 <Route path="profile" element={<Profile />} />
