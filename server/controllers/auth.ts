@@ -3,11 +3,10 @@ import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_KEY } from '../lib/env.js'
-import { logger } from '../lib/logger.js'
-import { UserModel } from '../models/user.js'
-import { UserRes } from '../shared/models.js'
-import { loginSchema, signupSchema } from '../shared/zod-schemas.js'
+import { JWT_KEY, logger } from '@/lib'
+import { UserModel } from '@/models/user'
+import { UserRes } from '@/shared/models'
+import { loginSchema, signupSchema } from '@/shared/zod-schemas'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
 

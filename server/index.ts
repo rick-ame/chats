@@ -5,12 +5,10 @@ import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 
-import { connectDB } from './lib/db.js'
-import { checkEnv, PORT } from './lib/env.js'
-import { logger } from './lib/logger.js'
-import { routes as authRoutes } from './routes/auth.js'
-import { routes as userRoutes } from './routes/user.js'
-import { prefix } from './shared/apis.js'
+import { checkEnv, connectDB, logger, PORT } from './lib'
+import { routes as authRoutes } from './routes/auth'
+import { routes as userRoutes } from './routes/user'
+import { prefix } from './shared/apis'
 
 try {
   checkEnv()
