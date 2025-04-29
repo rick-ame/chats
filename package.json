@@ -1,6 +1,5 @@
 {
   "private": true,
-  "type": "module",
   "scripts": {
     "clean": "rimraf server/dist",
     "dev:client": "pnpm --filter client dev",
