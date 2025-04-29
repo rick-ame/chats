@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthApi } from 'shared/apis'
@@ -17,7 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { apiClient } from '@/lib/api-client'
+import { apiClient, handleError } from '@/lib/api-client'
 
 import AuthButton from './auth-button'
 
@@ -50,20 +49,13 @@ const Auth: FC = () => {
     try {
       setLoading(true)
       const res = await apiClient.post(AuthApi.Signup, values)
+
       console.log(res)
     } catch (error) {
-      if (error instanceof AxiosError && error.status === 400) {
-        const {
-          response: { data },
-        } = error as {
-          response: {
-            data: {
-              body: Record<string, { _errors: string[] } | undefined>
-            }
-          }
-        }
+      handleError<{ body: SignupForm }>(error, (errorData) => {
+        const { body } = errorData.format()
         Object.keys(values).forEach((key) => {
-          const msg = data.body[key]?._errors[0]
+          const msg = body![key as keyof SignupForm]?._errors[0]
           if (msg) {
             signupForm.setError(key as keyof SignupForm, {
               type: 'zod',
@@ -71,7 +63,7 @@ const Auth: FC = () => {
             })
           }
         })
-      }
+      })
     } finally {
       setLoading(false)
     }

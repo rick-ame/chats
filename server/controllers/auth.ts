@@ -23,6 +23,8 @@ export const signup: RequestHandler<
     const { email, password } = req.body
     const user = await UserModel.create({ email, password })
 
+    logger.info(`created user: ${user.email}`)
+
     res.cookie('jwt', createToken(email, user.id), {
       maxAge,
       secure: true,
@@ -34,6 +36,7 @@ export const signup: RequestHandler<
       .json({ id: user.id, email: user.email, profileSetup: user.profileSetup })
   } catch (error) {
     logger.error(error)
+
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }

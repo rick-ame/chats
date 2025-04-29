@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express'
-import { AnyZodObject, ZodError } from 'zod'
+import { z } from 'zod'
 
 export const validate =
-  (schema: AnyZodObject): RequestHandler =>
+  (schema: z.AnyZodObject): RequestHandler =>
   async (req, res, next) => {
     try {
       await schema.parseAsync({
@@ -13,10 +13,6 @@ export const validate =
       })
       next()
     } catch (error) {
-      if (error instanceof ZodError) {
-        res.status(400).json(error.format())
-      } else {
-        res.status(400).json(error)
-      }
+      res.status(400).json(error)
     }
   }
