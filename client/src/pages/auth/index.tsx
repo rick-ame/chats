@@ -3,6 +3,7 @@ import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthApi } from 'shared/apis'
 import { loginSchema, signupSchema } from 'shared/zod-schemas'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import login from '@/assets/login.png'
@@ -34,7 +35,19 @@ const Auth: FC = () => {
     },
   })
   const onLogin = async (values: LoginForm) => {
-    console.log(values)
+    try {
+      setLoading(true)
+      const res = await apiClient.post(AuthApi.Login, values)
+      console.log(res)
+    } catch (error) {
+      handleError<{ message: string }>(error, (errorData) => {
+        if (!(errorData instanceof z.ZodError)) {
+          toast(errorData.message)
+        }
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const signupForm = useForm<SignupForm>({
@@ -53,16 +66,18 @@ const Auth: FC = () => {
       console.log(res)
     } catch (error) {
       handleError<{ body: SignupForm }>(error, (errorData) => {
-        const { body } = errorData.format()
-        Object.keys(values).forEach((key) => {
-          const msg = body![key as keyof SignupForm]?._errors[0]
-          if (msg) {
-            signupForm.setError(key as keyof SignupForm, {
-              type: 'zod',
-              message: msg,
-            })
-          }
-        })
+        if (errorData instanceof z.ZodError) {
+          const { body } = errorData.format()
+          Object.keys(values).forEach((key) => {
+            const msg = body![key as keyof SignupForm]?._errors[0]
+            if (msg) {
+              signupForm.setError(key as keyof SignupForm, {
+                type: 'zod',
+                message: msg,
+              })
+            }
+          })
+        }
       })
     } finally {
       setLoading(false)
@@ -89,7 +104,10 @@ const Auth: FC = () => {
             </p>
           </div>
           <div className="flex justify-center">
-            <Tabs defaultValue="login" className="h-[265px] w-full sm:w-3/4">
+            <Tabs
+              defaultValue="login"
+              className="h-[265px] w-full max-w-[400px] sm:w-3/4"
+            >
               <TabsList className="w-full bg-transparent">
                 <TabsTrigger
                   value="login"

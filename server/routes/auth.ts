@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import { AuthApi } from 'shared/apis'
-import { signupSchema } from 'shared/zod-schemas'
+import { loginSchema, signupSchema } from 'shared/zod-schemas'
 import { z } from 'zod'
 
-import { signup } from '@/controllers/auth'
+import { login, signup } from '@/controllers/auth'
 import { validate } from '@/middlewares'
 import { UserModel } from '@/models/user'
 
@@ -28,4 +28,14 @@ routes.post(
     }),
   ),
   signup,
+)
+
+routes.post(
+  AuthApi.Login,
+  validate(
+    z.object({
+      body: loginSchema,
+    }),
+  ),
+  login,
 )

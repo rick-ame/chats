@@ -9,29 +9,31 @@ export const apiClient = axios.create({
   timeout: 1000 * 20,
 })
 
-type ClientErrorHandler<T> = (errorData: z.ZodError<T>) => void
-export const handleError = <T>(
+type ClientErrorHandler<T, U> = (errorData: z.ZodError<T> | U) => void
+export const handleError = <TZodError, TClientError = Record<string, string>>(
   error: unknown,
-  clientErrorHandler: ClientErrorHandler<T>,
+  clientErrorHandler: ClientErrorHandler<TZodError, TClientError>,
 ) => {
-  if (error instanceof AxiosError) {
-    const {
-      response: { data },
-    } = error as {
-      response: {
-        data: z.ZodError<T>
-      }
-    }
-    if (error.status === 400) {
-      if (data.name === 'ZodError') {
-        clientErrorHandler(new z.ZodError(data.issues))
-      } else {
-        toast(error.message)
-      }
-    } else if (error.status === 401) {
-      redirect('/auth')
-    }
-  } else {
+  if (!(error instanceof AxiosError) || !error.response) {
     toast((error as Error).message || String(error))
+    return
   }
+
+  const data = error.response.data as z.ZodError<TZodError> | TClientError
+
+  if (error.status === 400) {
+    let errorData = data
+    if ((data as z.ZodError<TZodError>).name === 'ZodError') {
+      errorData = new z.ZodError((data as z.ZodError<TZodError>).issues)
+    }
+    clientErrorHandler(errorData)
+    return
+  }
+
+  if (error.status === 401) {
+    redirect('/auth')
+    return
+  }
+
+  toast(error.message)
 }

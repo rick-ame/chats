@@ -1,6 +1,7 @@
+import { verify } from 'argon2'
 import { RequestHandler } from 'express'
 import { sign } from 'jsonwebtoken'
-import { signupSchema } from 'shared/zod-schemas'
+import { loginSchema, signupSchema } from 'shared/zod-schemas'
 import { z } from 'zod'
 
 import { JWT_KEY, logger } from '@/lib'
@@ -39,4 +40,44 @@ export const signup: RequestHandler<
 
     res.status(500).json({ message: 'Internal Server Error' })
   }
+}
+
+export const login: RequestHandler<
+  unknown,
+  (Omit<User, 'password'> & { id: string }) | { message: string },
+  z.infer<typeof loginSchema>,
+  unknown,
+  object
+> = async (req, res) => {
+  const { email, password } = req.body
+  const user = await UserModel.findOne({ email })
+
+  if (!user) {
+    res.status(400).json({ message: 'Email or password is incorrect' })
+    return
+  }
+
+  const pwdMatch = await verify(user.password, password)
+  if (!pwdMatch) {
+    res.status(400).json({ message: 'Email or password is incorrect' })
+    return
+  }
+
+  logger.info(`user logged in: ${user.email}`)
+
+  res.cookie('jwt', createToken(email, user.id), {
+    maxAge,
+    secure: true,
+    sameSite: 'lax',
+    httpOnly: true,
+  })
+  res.status(200).json({
+    id: user.id,
+    email: user.email,
+    profileSetup: user.profileSetup,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    image: user.image,
+    color: user.color,
+  })
 }
