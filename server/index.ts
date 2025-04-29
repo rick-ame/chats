@@ -5,21 +5,23 @@ import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 
-import { checkEnv, connectDB, logger, PORT } from './lib'
-import { routes as authRoutes } from './routes/auth'
-import { routes as userRoutes } from './routes/user'
-import { prefix } from './shared/apis'
+import { connectDB } from './lib/db.js'
+import { checkEnv, PORT } from './lib/env.js'
+import { logger } from './lib/logger.js'
+import { routes as authRoutes } from './routes/auth.js'
+import { routes as userRoutes } from './routes/user.js'
+import { prefix } from './shared/apis.js'
 
 try {
   checkEnv()
 } catch (error) {
-  logger.error(error)
+  logger.error((error as Error).toString())
   process.exit(1)
 }
 
 const app = express()
 
-const staticFiles = path.resolve(__dirname, './public')
+const staticFiles = path.resolve(import.meta.dirname, 'public')
 app.use(express.static(staticFiles))
 
 app.use(cookieParser())
@@ -41,6 +43,6 @@ async function main() {
   })
 }
 main().catch((error) => {
-  logger.error(error)
+  logger.error(error.toString())
   process.exit(1)
 })

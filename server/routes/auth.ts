@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import { z } from 'zod'
 
-import { login, signup } from '../controllers/auth'
-import { validate } from '../middlewares'
-import { UserModel } from '../models/user'
-import { AuthApi } from '../shared/apis'
-import { loginSchema, signupSchema } from '../shared/zod-schemas'
+import { login, signup } from '../controllers/auth.js'
+import { validate } from '../middlewares.js'
+import { UserModel } from '../models/user.js'
+import { AuthApi } from '../shared/apis.js'
+import { loginSchema, signupSchema } from '../shared/zod-schemas.js'
 
 export const routes = Router()
 

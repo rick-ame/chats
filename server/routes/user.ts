@@ -1,8 +1,8 @@
 import { Router } from 'express'
 
-import { getUserInfo } from '../controllers/user'
-import { verifyToken } from '../middlewares'
-import { UserApi } from '../shared/apis'
+import { getUserInfo } from '../controllers/user.js'
+import { verifyToken } from '../middlewares.js'
+import { UserApi } from '../shared/apis.js'
 
 export const routes = Router()
 

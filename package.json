@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rimraf server/dist",
     "dev:client": "pnpm --filter client dev",
@@ -15,7 +16,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
-    "@types/node": "^22.15.3",
     "eslint": "^9.25.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.3.4",

@@ -1,8 +1,8 @@
-import { connect, connection } from 'mongoose'
+import mongoose from 'mongoose'
 
-import { DATABASE_URI } from './env'
+import { DATABASE_URI } from './env.js'
 
 export const connectDB = async () => {
-  await connect(DATABASE_URI)
-  await connection.db?.admin().command({ ping: 1 })
+  await mongoose.connect(DATABASE_URI)
+  await mongoose.connection.db?.admin().command({ ping: 1 })
 }

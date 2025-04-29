@@ -1,17 +1,18 @@
 import { verify } from 'argon2'
 import { RequestHandler } from 'express'
-import { sign } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_KEY, logger } from '../lib'
-import { UserModel } from '../models/user'
-import { UserRes } from '../shared/models'
-import { loginSchema, signupSchema } from '../shared/zod-schemas'
+import { JWT_KEY } from '../lib/env.js'
+import { logger } from '../lib/logger.js'
+import { UserModel } from '../models/user.js'
+import { UserRes } from '../shared/models.js'
+import { loginSchema, signupSchema } from '../shared/zod-schemas.js'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
 
 const createToken = (email: string, userId: string) => {
-  return sign({ email, userId }, JWT_KEY, { expiresIn: maxAge })
+  return jwt.sign({ email, userId }, JWT_KEY, { expiresIn: maxAge })
 }
 
 export const signup: RequestHandler<

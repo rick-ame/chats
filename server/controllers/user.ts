@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 
-import { logger } from '../lib'
-import { UserModel } from '../models/user'
+import { logger } from '../lib/logger.js'
+import { UserModel } from '../models/user.js'
 
 export const getUserInfo: RequestHandler = async (req, res) => {
   try {

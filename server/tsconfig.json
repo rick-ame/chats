@@ -2,12 +2,15 @@
   "extends": "..",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
-    "target": "ES2016",
-    "module": "CommonJS",
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
 
     /* Bundler mode */
-    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
     "isolatedModules": true,
+    "moduleDetection": "force",
     "outDir": "./dist"
-  }
+  },
+  "exclude": ["node_modules"]
 }
