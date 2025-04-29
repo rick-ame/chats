@@ -1,12 +1,12 @@
 import { verify } from 'argon2'
 import { RequestHandler } from 'express'
 import { sign } from 'jsonwebtoken'
-import { UserRes } from 'shared/models'
-import { loginSchema, signupSchema } from 'shared/zod-schemas'
 import { z } from 'zod'
 
-import { JWT_KEY, logger } from '@/lib'
-import { UserModel } from '@/models/user'
+import { JWT_KEY, logger } from '../lib'
+import { UserModel } from '../models/user'
+import { UserRes } from '../shared/models'
+import { loginSchema, signupSchema } from '../shared/zod-schemas'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
 

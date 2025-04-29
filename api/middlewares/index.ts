@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_KEY } from '@/lib'
+import { JWT_KEY } from '../lib'
 
 export const validate =
   (schema: z.AnyZodObject): RequestHandler =>

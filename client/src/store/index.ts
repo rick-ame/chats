@@ -1,8 +1,8 @@
-import { UserApi } from 'shared/apis'
-import { UserRes } from 'shared/models'
 import { create } from 'zustand'
 
 import { apiClient, handleError } from '@/lib/api-client'
+import { UserApi } from '~/apis'
+import { UserRes } from '~/models'
 
 interface UserStore {
   userInfo?: UserRes

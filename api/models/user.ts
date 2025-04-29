@@ -1,6 +1,7 @@
 import { hash } from 'argon2'
 import { model, Schema } from 'mongoose'
-import { User } from 'shared/models'
+
+import { User } from '../shared/models'
 
 const userSchema = new Schema<User>(
   {

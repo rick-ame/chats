@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios'
 import { redirect } from 'react-router-dom'
-import { prefix } from 'shared/apis'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { prefix } from '~/apis'
 
 export const apiClient = axios.create({
   baseURL: prefix,

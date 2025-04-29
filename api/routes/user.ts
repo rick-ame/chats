@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { UserApi } from 'shared/apis'
 
-import { getUserInfo } from '@/controllers/user'
-import { verifyToken } from '@/middlewares'
+import { getUserInfo } from '../controllers/user'
+import { verifyToken } from '../middlewares'
+import { UserApi } from '../shared/apis'
 
 export const routes = Router()
 

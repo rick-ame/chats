@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "..",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "target": "ES2016",
@@ -8,11 +8,6 @@
     /* Bundler mode */
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "../dist",
-
-    "paths": {
-      "shared/*": ["../shared/*"],
-      "@/*": ["./*"]
-    }
+    "outDir": "../dist/api"
   }
 }
