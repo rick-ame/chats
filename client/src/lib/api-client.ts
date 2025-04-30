@@ -6,7 +6,7 @@ import { prefix } from '~/apis'
 
 export const apiClient = axios.create({
   baseURL: prefix,
-  timeout: 1000 * 20,
+  timeout: 1000 * 10,
 })
 
 export const handleError = <ClientError>(

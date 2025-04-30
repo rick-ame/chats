@@ -58,7 +58,7 @@ const Login: FC = () => {
     >
       <div className="p-8">
         <header className="mb-6 flex items-center justify-center">
-          <h2 className="from-primary via-primary/80 to-primary mx-4 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
+          <h2 className="from-primary via-primary/80 to-primary mx-2 bg-gradient-to-br bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl">
             Welcome Back
           </h2>
           <img src={victory} alt="Victory Emoji" className="size-[60px]" />
