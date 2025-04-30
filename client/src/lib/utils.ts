@@ -7,6 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatDate(input: string | number): string {
   const date = new Date(input)
+
+  if (isNaN(date.getTime())) {
+    return 'Invalid Date'
+  }
+
   return date.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -16,6 +21,7 @@ export function formatDate(input: string | number): string {
 
 export const formatFullDate = (input: string | number) => {
   const date = new Date(input)
+
   if (isNaN(date.getTime())) {
     return 'Invalid Date'
   }

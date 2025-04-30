@@ -42,9 +42,12 @@ export const signup: RequestHandler<
       sameSite: 'lax',
       httpOnly: true,
     })
-    res
-      .status(201)
-      .json({ id: user.id, email: user.email, profileSetup: user.profileSetup })
+    res.status(201).json({
+      id: user.id,
+      email: user.email,
+      color: user.color,
+      profileSetup: user.profileSetup,
+    })
   } catch (error) {
     logger.error(error)
 
@@ -59,8 +62,8 @@ export const login: RequestHandler<
 > = async (req, res) => {
   try {
     const { email, password } = req.body
-    const user = await UserModel.findOne({ email })
 
+    const user = await UserModel.findOne({ email })
     if (!user) {
       res.status(400).json({ message: 'Email or password is incorrect' })
       return

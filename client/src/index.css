@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@import './assets/colors/index.css';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -41,6 +43,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* fallback color */
 :root {
   --radius: 0.5rem;
   --background: oklch(1 0 0);
@@ -108,13 +111,4 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.541 0.281 293.009);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

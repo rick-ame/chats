@@ -15,6 +15,7 @@ export const validate =
         params: req.params,
         headers: req.headers,
       })
+
       next()
     } catch (error) {
       res.status(400).json(error)
@@ -32,6 +33,7 @@ export const verifyToken: RequestHandler<
   Locals
 > = async (req, res, next) => {
   const token = req.cookies.jwt
+
   if (!token) {
     res.status(401).json({ message: 'Authorization error' })
     return

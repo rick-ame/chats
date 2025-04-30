@@ -25,7 +25,7 @@ const Login: FC = () => {
   const { loading, login } = useAuthStore()
   const navigate = useNavigate()
 
-  const loginForm = useForm<LoginForm>({
+  const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -50,11 +50,11 @@ const Login: FC = () => {
   }
 
   return (
-    <motion.div
+    <motion.main
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="dark:bg-background/30 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
+      className="dark:bg-background/30 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
     >
       <div className="p-8">
         <header className="mb-6 flex items-center justify-center">
@@ -63,13 +63,10 @@ const Login: FC = () => {
           </h2>
           <img src={victory} alt="Victory Emoji" className="size-[60px]" />
         </header>
-        <Form {...loginForm}>
-          <form
-            onSubmit={loginForm.handleSubmit(onLogin)}
-            className="space-y-6"
-          >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onLogin)} className="space-y-6">
             <FormField
-              control={loginForm.control}
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -86,7 +83,7 @@ const Login: FC = () => {
               )}
             />
             <FormField
-              control={loginForm.control}
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -113,7 +110,7 @@ const Login: FC = () => {
             <MButton
               type="submit"
               loading={loading}
-              className="w-full font-semibold text-white"
+              className="w-full font-semibold"
             >
               Login
             </MButton>
@@ -131,7 +128,7 @@ const Login: FC = () => {
           </Link>
         </p>
       </div>
-    </motion.div>
+    </motion.main>
   )
 }
 export default Login

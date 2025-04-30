@@ -30,7 +30,7 @@ const FloatingShape: FC<{
 
 export const Background: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="to-secondary via-primary/30 relative flex min-h-dvh items-center justify-center overflow-hidden bg-gradient-to-br from-gray-300 dark:from-gray-900">
+    <div className="to-secondary via-primary/30 relative flex min-h-dvh min-w-[360px] items-center justify-center overflow-hidden bg-gradient-to-br from-gray-300 p-4 dark:from-gray-900">
       <FloatingShape
         color="bg-primary/80"
         size="w-64 h-64"

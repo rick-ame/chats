@@ -37,9 +37,8 @@ async function main() {
   await connectDB()
   logger.info('successfully connected to MongoDB!')
 
-  app.listen(PORT, () => {
-    logger.info(`server is running at: ${PORT}!`)
-  })
+  await app.listen(PORT)
+  logger.info(`server is running at: ${PORT}!`)
 }
 main().catch((error) => {
   logger.error(error)

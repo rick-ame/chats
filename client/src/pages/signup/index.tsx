@@ -24,7 +24,7 @@ const Signup: FC = () => {
   const { loading, signup } = useAuthStore()
   const navigate = useNavigate()
 
-  const signupForm = useForm<SignupForm>({
+  const form = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -33,7 +33,7 @@ const Signup: FC = () => {
     },
   })
 
-  const password = useWatch({ name: 'password', control: signupForm.control })
+  const password = useWatch({ name: 'password', control: form.control })
 
   const onSignup = async (values: SignupForm) => {
     try {
@@ -42,7 +42,7 @@ const Signup: FC = () => {
     } catch (error) {
       const errorData = handleError<ResError>(error)
       if (errorData?.code === ClientErrorCode.EmailRegistered) {
-        signupForm.setError('email', {
+        form.setError('email', {
           type: 'custom',
           message: errorData.message,
         })
@@ -51,23 +51,20 @@ const Signup: FC = () => {
   }
 
   return (
-    <motion.div
+    <motion.main
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="dark:bg-background/30 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
+      className="dark:bg-background/30 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
     >
       <div className="p-8">
-        <h2 className="from-primary via-primary/80 to-primary mx-4 mb-6 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
+        <h2 className="from-primary via-primary/80 to-primary mb-6 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
           Create Account
         </h2>
-        <Form {...signupForm}>
-          <form
-            onSubmit={signupForm.handleSubmit(onSignup)}
-            className="space-y-4"
-          >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSignup)} className="space-y-4">
             <FormField
-              control={signupForm.control}
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -84,7 +81,7 @@ const Signup: FC = () => {
               )}
             />
             <FormField
-              control={signupForm.control}
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -101,7 +98,7 @@ const Signup: FC = () => {
               )}
             />
             <FormField
-              control={signupForm.control}
+              control={form.control}
               name="confirm"
               render={({ field }) => (
                 <FormItem>
@@ -121,7 +118,7 @@ const Signup: FC = () => {
             <MButton
               type="submit"
               loading={loading}
-              className="w-full font-semibold text-white"
+              className="w-full font-semibold"
             >
               Sign Up
             </MButton>
@@ -139,7 +136,7 @@ const Signup: FC = () => {
           </Link>
         </p>
       </div>
-    </motion.div>
+    </motion.main>
   )
 }
 
