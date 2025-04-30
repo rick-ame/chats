@@ -31,6 +31,9 @@ export default tseslint.config(
         },
       },
     },
+    languageOptions: {
+      globals: globals.es2023,
+    },
   },
   {
     files: ['client/**/*.{ts,tsx}'],

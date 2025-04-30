@@ -11,6 +11,11 @@ import { checkEnv, connectDB, logger, PORT } from './lib'
 import { routes as authRoutes } from './routes/auth'
 import { routes as userRoutes } from './routes/user'
 
+declare global {
+  // eslint-disable-next-line no-var
+  var STATIC_FILES: string | undefined
+}
+
 try {
   checkEnv()
 } catch (error) {
@@ -20,7 +25,8 @@ try {
 
 const app = express()
 
-const staticFiles = path.resolve(import.meta.dirname, '../public')
+const staticFiles =
+  globalThis.STATIC_FILES ?? path.resolve(import.meta.dirname, '../public')
 app.use(express.static(staticFiles))
 
 app.use(cookieParser())
