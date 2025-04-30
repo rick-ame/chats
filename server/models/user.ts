@@ -21,7 +21,7 @@ const userSchema = new Schema<User>(
       type: String,
       required: false,
     },
-    image: {
+    avatar: {
       type: String,
       required: false,
     },

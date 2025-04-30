@@ -1,11 +1,21 @@
 import { RequestHandler } from 'express'
 
 import { logger } from '@/lib'
+import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
+import { UserRes } from '~/models'
+import { ResError } from '~/response-error'
 
-export const getUserInfo: RequestHandler = async (req, res) => {
+export const getUserInfo: RequestHandler<
+  unknown,
+  UserRes | ResError,
+  unknown,
+  unknown,
+  Locals
+> = async (req, res) => {
   try {
-    const userId = req.params.$userId
+    const userId = res.locals.userId
+
     const user = await UserModel.findById(userId)
     if (!user) {
       res.status(404).json({ message: 'User not found' })
@@ -18,7 +28,7 @@ export const getUserInfo: RequestHandler = async (req, res) => {
       profileSetup: user.profileSetup,
       firstName: user.firstName,
       lastName: user.lastName,
-      image: user.image,
+      avatar: user.avatar,
       color: user.color,
     })
   } catch (error) {

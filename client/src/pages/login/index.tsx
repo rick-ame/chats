@@ -54,7 +54,7 @@ const Login: FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="dark:bg-background/50 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
+      className="dark:bg-background/30 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
     >
       <div className="p-8">
         <header className="mb-6 flex items-center justify-center">
@@ -66,7 +66,7 @@ const Login: FC = () => {
         <Form {...loginForm}>
           <form
             onSubmit={loginForm.handleSubmit(onLogin)}
-            className="space-y-8"
+            className="space-y-6"
           >
             <FormField
               control={loginForm.control}

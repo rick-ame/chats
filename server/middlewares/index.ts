@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { JWT_KEY } from '@/lib'
+import { ResError } from '~/response-error'
 
 export const validate =
   (schema: z.AnyZodObject): RequestHandler =>
@@ -20,7 +21,16 @@ export const validate =
     }
   }
 
-export const verifyToken: RequestHandler = async (req, res, next) => {
+export type Locals = {
+  userId: string
+}
+export const verifyToken: RequestHandler<
+  unknown,
+  ResError,
+  unknown,
+  unknown,
+  Locals
+> = async (req, res, next) => {
   const token = req.cookies.jwt
   if (!token) {
     res.status(401).json({ message: 'Authorization error' })
@@ -29,7 +39,7 @@ export const verifyToken: RequestHandler = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_KEY) as jwt.JwtPayload
-    req.params.$userId = decoded.userId
+    res.locals.userId = decoded.userId
 
     next()
   } catch {

@@ -3,7 +3,7 @@ export type User = {
   password: string
   firstName?: string
   lastName?: string
-  image?: string
+  avatar?: string
   color?: number
   profileSetup: boolean
 }

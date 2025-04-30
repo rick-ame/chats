@@ -55,7 +55,7 @@ const Signup: FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="dark:bg-background/50 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
+      className="dark:bg-background/30 mx-4 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
     >
       <div className="p-8">
         <h2 className="from-primary via-primary/80 to-primary mx-4 mb-6 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
@@ -64,7 +64,7 @@ const Signup: FC = () => {
         <Form {...signupForm}>
           <form
             onSubmit={signupForm.handleSubmit(onSignup)}
-            className="space-y-8"
+            className="space-y-4"
           >
             <FormField
               control={signupForm.control}

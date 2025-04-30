@@ -18,9 +18,7 @@ const createToken = (email: string, userId: string) => {
 export const signup: RequestHandler<
   unknown,
   UserRes | ResError,
-  z.infer<typeof signupSchema>,
-  unknown,
-  object
+  z.infer<typeof signupSchema>
 > = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -56,10 +54,8 @@ export const signup: RequestHandler<
 
 export const login: RequestHandler<
   unknown,
-  UserRes | { message: string },
-  z.infer<typeof loginSchema>,
-  unknown,
-  object
+  UserRes | ResError,
+  z.infer<typeof loginSchema>
 > = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -90,7 +86,7 @@ export const login: RequestHandler<
       profileSetup: user.profileSetup,
       firstName: user.firstName,
       lastName: user.lastName,
-      image: user.image,
+      avatar: user.avatar,
       color: user.color,
     })
   } catch (error) {
