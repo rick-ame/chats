@@ -4,9 +4,9 @@ export const JWT_KEY = process.env.JWT_KEY as string
 
 export const checkEnv = () => {
   if (!DATABASE_URI) {
-    throw new Error('DATABASE_URI is required!')
+    throw new Error('env DATABASE_URI is required!')
   }
   if (!JWT_KEY) {
-    throw new Error('JWT_KEY is required!')
+    throw new Error('env JWT_KEY is required!')
   }
 }

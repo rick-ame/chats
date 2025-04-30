@@ -14,7 +14,7 @@ import { routes as userRoutes } from './routes/user'
 try {
   checkEnv()
 } catch (error) {
-  logger.error((error as Error).toString())
+  logger.error(error)
   process.exit(1)
 }
 
@@ -42,6 +42,6 @@ async function main() {
   })
 }
 main().catch((error) => {
-  logger.error(error.toString())
+  logger.error(error)
   process.exit(1)
 })
