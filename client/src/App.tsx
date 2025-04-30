@@ -26,6 +26,7 @@ const App: FC = () => {
       <div className="fixed end-4 top-4 md:end-8">
         <ThemeToggle />
       </div>
+      <Toaster />
       {loading ? (
         <Loading />
       ) : (
@@ -44,7 +45,6 @@ const App: FC = () => {
               <Route path="*" element={<Navigate to="/auth" />} />
             </Routes>
           </BrowserRouter>
-          <Toaster />
         </Suspense>
       )}
     </Providers>
