@@ -5,8 +5,8 @@ import { z } from 'zod'
 
 import { JWT_KEY, logger } from '@/lib'
 import { UserModel } from '@/models/user'
-import { UserRes } from '@/shared/models'
-import { loginSchema, signupSchema } from '@/shared/zod-schemas'
+import { UserRes } from '~/models'
+import { loginSchema, signupSchema } from '~/zod-schemas'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
 

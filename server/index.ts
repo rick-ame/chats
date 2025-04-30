@@ -5,10 +5,11 @@ import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 
+import { prefix } from '~/apis'
+
 import { checkEnv, connectDB, logger, PORT } from './lib'
 import { routes as authRoutes } from './routes/auth'
 import { routes as userRoutes } from './routes/user'
-import { prefix } from './shared/apis'
 
 try {
   checkEnv()
@@ -19,7 +20,7 @@ try {
 
 const app = express()
 
-const staticFiles = path.resolve(import.meta.dirname, 'public')
+const staticFiles = path.resolve(import.meta.dirname, '../public')
 app.use(express.static(staticFiles))
 
 app.use(cookieParser())

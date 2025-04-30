@@ -1,4 +1,4 @@
 /**
  * Vercel api entry
  */
-import('../server/dist/index.js')
+import('../server/dist/server/index.js')
