@@ -10,7 +10,7 @@ export const ThemeToggle: FC = () => {
   return (
     <Button
       variant="ghost"
-      className="w-10 px-0"
+      className="hover:bg-background/50 w-10 px-0"
       onClick={() => {
         if (theme === themes[0]) {
           setTheme(themes[1])

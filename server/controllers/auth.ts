@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { JWT_KEY, logger } from '@/lib'
 import { UserModel } from '@/models/user'
 import { UserRes } from '~/models'
+import { ClientErrorCode, ResError } from '~/response-error'
 import { loginSchema, signupSchema } from '~/zod-schemas'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
@@ -16,13 +17,23 @@ const createToken = (email: string, userId: string) => {
 
 export const signup: RequestHandler<
   unknown,
-  UserRes | { message: string },
+  UserRes | ResError,
   z.infer<typeof signupSchema>,
   unknown,
   object
 > = async (req, res) => {
   try {
     const { email, password } = req.body
+
+    const found = await UserModel.findOne({ email })
+    if (found) {
+      res.status(400).json({
+        code: ClientErrorCode.EmailRegistered,
+        message: 'Email has been registered',
+      })
+      return
+    }
+
     const user = await UserModel.create({ email, password })
 
     logger.info(`created user: ${user.email}`)
