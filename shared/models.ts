@@ -13,8 +13,6 @@ const colors = [
 export const Color = z.enum(colors)
 export type Color = z.infer<typeof Color>
 
-export const defaultColor = Color.enum.violet
-
 export type User = {
   email: string
   password: string

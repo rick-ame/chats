@@ -41,9 +41,9 @@ const Login: FC = () => {
         navigate('/profile')
       }
     } catch (error) {
-      const errorData = handleError<ResError>(error)
-      if (errorData) {
-        toast.error(errorData.message)
+      const errorRes = handleError<ResError>(error)
+      if (errorRes) {
+        toast.error(errorRes.data.message)
       }
     }
   }

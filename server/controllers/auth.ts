@@ -1,14 +1,16 @@
-import { verify } from 'argon2'
+import { hash, verify } from 'argon2'
 import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { JWT_KEY, logger } from '@/lib'
+import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
 import {
   ClientErrorCode,
   loginSchema,
   ResError,
+  resetPasswordSchema,
   ResUser,
   signupSchema,
 } from '~'
@@ -36,7 +38,10 @@ export const signup: RequestHandler<
       return
     }
 
-    const user = await UserModel.create({ email, password })
+    const user = await UserModel.create({
+      email,
+      password: await hash(password),
+    })
 
     logger.info(`created user: ${user.email}`)
 
@@ -123,5 +128,48 @@ export const logout: RequestHandler<unknown, { message: string }> = async (
     res.json({
       message: 'Internal server error',
     })
+  }
+}
+
+export const resetPassword: RequestHandler<
+  unknown,
+  { message: string },
+  z.infer<typeof resetPasswordSchema>,
+  unknown,
+  Locals
+> = async (req, res) => {
+  try {
+    const userId = res.locals.userId
+    const { oldPassword, password } = req.body
+
+    const found = await UserModel.findById(userId)
+    if (!found) {
+      res.status(404).json({ message: 'User not found' })
+      return
+    }
+
+    const pwdMatch = await verify(found.password, oldPassword)
+    if (!pwdMatch) {
+      res.status(400).json({ message: 'Password is incorrect' })
+      return
+    }
+
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        password: await hash(password),
+      },
+      {
+        new: true,
+      },
+    )
+
+    logger.info(`user reset password: ${user?.email || found.email}`)
+
+    res.status(200).json({ message: 'Password updated' })
+  } catch (error) {
+    logger.error(error)
+
+    res.status(500).json({ message: 'Internal Server Error' })
   }
 }

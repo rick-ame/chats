@@ -4,19 +4,15 @@ import { toast } from 'sonner'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { useAuthStore } from '@/store'
 
 const maxSize = 1024 * 1024 * 500
 
 interface Props {
+  name: string
   image: string
   setImage: (image: string) => void
 }
-export const ProfileAvatar: FC<Props> = ({ image, setImage }) => {
-  const { user } = useAuthStore()
-
-  const { email, firstName = '' } = user!
-
+export const ProfileAvatar: FC<Props> = ({ name, image, setImage }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onChange: ChangeEventHandler = () => {
@@ -54,7 +50,7 @@ export const ProfileAvatar: FC<Props> = ({ image, setImage }) => {
         >
           <AvatarImage src={image} alt="Avatar" />
           <AvatarFallback className="bg-primary/70 text-primary-foreground text-4xl font-bold">
-            {(firstName.charAt(0) || email.charAt(0)).toUpperCase()}
+            {name.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <button

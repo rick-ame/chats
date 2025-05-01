@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Loader, Mail, SquareUser } from 'lucide-react'
 import { motion } from 'motion/react'
-import { FC, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FC, useEffect, useRef, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { Background } from '@/components/background'
 import { MButton } from '@/components/m-button'
 import { MInput } from '@/components/m-input'
-import { useColor } from '@/components/providers'
+import { useThemeColor } from '@/components/providers'
 import {
   Form,
   FormControl,
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
 import { PatchProfileForm, useAuthStore } from '@/store'
-import { Color, patchProfileScheme, ResError } from '~'
+import { Color, patchProfileScheme } from '~'
 
 import { ColorOption } from './color-option'
 import { ProfileAvatar } from './profile-avatar'
@@ -29,16 +29,19 @@ const colors = Color.options
 const Profile: FC = () => {
   const navigate = useNavigate()
   const { user, loading, patchProfile } = useAuthStore()
-  const { color, setColor } = useColor()
 
   const {
     email,
     avatar = '',
     firstName = '',
     profileSetup,
-    color: userColor,
     lastName = '',
+    color: userColor,
   } = user!
+
+  const setThemeColor = useThemeColor()
+  const [color, setColor] = useState<Color>(userColor)
+  const revertThemeColorRef = useRef(true)
 
   const [image, setImage] = useState(avatar)
 
@@ -51,6 +54,8 @@ const Profile: FC = () => {
     },
   })
 
+  const fieldFirstName = useWatch({ name: 'firstName', control: form.control })
+
   const onSubmit = async (values: PatchProfileForm) => {
     try {
       await patchProfile({
@@ -58,20 +63,30 @@ const Profile: FC = () => {
         color,
         avatar: avatar === image ? undefined : image,
       })
+      revertThemeColorRef.current = false
       toast.success('Profile updated')
-      if (!profileSetup) {
-        navigate('/')
-      }
+      setTimeout(() => {
+        if (!profileSetup) {
+          navigate('/')
+        } else {
+          navigate(-1)
+        }
+      }, 1000)
     } catch (error) {
-      handleError<ResError>(error)
+      const errorRes = handleError(error)
+      if (errorRes?.status === 413) {
+        toast.error('Image size cannot be greater than 500K')
+      }
     }
   }
 
   useEffect(() => {
     return () => {
-      setColor(userColor)
+      if (revertThemeColorRef.current) {
+        setThemeColor(userColor)
+      }
     }
-  }, [setColor, userColor])
+  }, [setThemeColor, userColor])
 
   return (
     <Background>
@@ -105,10 +120,22 @@ const Profile: FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <ProfileAvatar image={image} setImage={setImage} />
+              <ProfileAvatar
+                name={fieldFirstName || email}
+                image={image}
+                setImage={setImage}
+              />
               <div className="mt-4 grid grid-cols-4 gap-2">
-                {colors.map((color, i) => (
-                  <ColorOption key={i} color={color} />
+                {colors.map((c, i) => (
+                  <ColorOption
+                    key={i}
+                    color={c}
+                    onSelect={(color) => {
+                      setColor(color)
+                      setThemeColor(color)
+                    }}
+                    selected={c === color}
+                  />
                 ))}
               </div>
             </motion.section>

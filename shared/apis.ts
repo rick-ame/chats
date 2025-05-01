@@ -4,6 +4,7 @@ export const enum AuthApi {
   Signup = '/signup',
   Login = '/login',
   Logout = '/logout',
+  ResetPassword = '/reset-password',
 }
 
 export const enum UserApi {

@@ -22,3 +22,20 @@ export const patchProfileScheme = z.object({
   firstName: z.string().trim().nonempty('First name is required'),
   lastName: z.string().trim().nonempty('Last name is required'),
 })
+
+export const resetPasswordSchema = z
+  .object({
+    oldPassword: z
+      .string()
+      .nonempty('Please input old password')
+      .min(6, 'Password length cannot be less than 6'),
+    password: z
+      .string()
+      .nonempty('Please input new password')
+      .min(6, 'Password length cannot be less than 6'),
+    confirm: z.string(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    path: ['confirm'],
+    message: 'Please input same password',
+  })

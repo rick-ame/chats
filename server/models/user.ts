@@ -1,7 +1,6 @@
-import { hash } from 'argon2'
 import { model, Schema } from 'mongoose'
 
-import { defaultColor, User } from '~'
+import { Color, User } from '~'
 
 const userSchema = new Schema<User>(
   {
@@ -27,7 +26,7 @@ const userSchema = new Schema<User>(
     },
     color: {
       type: String,
-      default: defaultColor,
+      default: Color.enum.violet,
     },
     profileSetup: {
       type: Boolean,
@@ -36,16 +35,5 @@ const userSchema = new Schema<User>(
   },
   { timestamps: true },
 )
-
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next()
-    return
-  }
-
-  this.password = await hash(this.password)
-
-  next()
-})
 
 export const UserModel = model<User>('Users', userSchema)

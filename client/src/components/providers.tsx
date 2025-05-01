@@ -4,50 +4,51 @@ import {
   FC,
   PropsWithChildren,
   use,
+  useCallback,
   useLayoutEffect,
-  useState,
 } from 'react'
+import { useLocalStorage } from 'react-use'
 
 import { useAuthStore } from '@/store'
-import { Color, defaultColor } from '~'
+import { Color } from '~'
 
 const ColorContext = createContext<{
-  color: Color
   setColor: (color: Color) => void
 }>({
-  color: defaultColor,
   setColor: () => {
     throw new Error(
       `You should implement ColorProvider first before setting color`,
     )
   },
 })
-const ColorProvider: FC<PropsWithChildren<{ color: Color }>> = ({
-  children,
-  color: userColor,
-}) => {
-  const [color, setColor] = useState(userColor)
+const ColorProvider: FC<PropsWithChildren> = ({ children }) => {
+  const { user } = useAuthStore()
+  const [themeColor, setThemeColor] = useLocalStorage<Color>('theme-color')
+
+  const setColor = useCallback((color: Color) => {
+    document.documentElement.setAttribute('data-color', color)
+  }, [])
 
   useLayoutEffect(() => {
-    const root = document.documentElement
-    root.setAttribute('data-color', color)
-  }, [color])
+    if (user?.color && user.color !== themeColor) {
+      setColor(user.color)
+      setThemeColor(user.color)
+    } else if (themeColor) {
+      setColor(themeColor)
+    }
+  }, [setColor, setThemeColor, user?.color, themeColor])
 
   return (
-    <ColorContext.Provider value={{ color, setColor }}>
+    <ColorContext.Provider value={{ setColor }}>
       {children}
     </ColorContext.Provider>
   )
 }
-export const useColor = () => use(ColorContext)
+export const useThemeColor = () => use(ColorContext).setColor
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
-  const { user } = useAuthStore()
-
-  const color = user?.color || defaultColor
-
   return (
-    <ColorProvider color={color}>
+    <ColorProvider>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
         {children}
       </ThemeProvider>

@@ -11,6 +11,7 @@ import { useAuthStore } from './store'
 const Login = lazy(() => import('./pages/login'))
 const Signup = lazy(() => import('./pages/signup'))
 const Profile = lazy(() => import('./pages/profile'))
+const ResetPassword = lazy(() => import('./pages/reset-password'))
 const Chat = lazy(() => import('./pages/chat'))
 
 const App: FC = () => {
@@ -52,6 +53,7 @@ const App: FC = () => {
                 <Route path="profile" element={<Profile />} />
                 <Route path="" element={<Setup />}>
                   <Route path="" element={<Chat />} />
+                  <Route path="reset-password" element={<ResetPassword />} />
                 </Route>
               </Route>
               <Route path="*" element={<Navigate to="/login" />} />

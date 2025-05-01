@@ -7,6 +7,7 @@ import {
   Color,
   loginSchema,
   patchProfileScheme,
+  resetPasswordSchema,
   ResUser,
   signupSchema,
   UserApi,
@@ -15,6 +16,7 @@ import {
 export type LoginForm = z.infer<typeof loginSchema>
 export type SignupForm = z.infer<typeof signupSchema>
 export type PatchProfileForm = z.infer<typeof patchProfileScheme>
+export type ResetPasswordForm = z.infer<typeof resetPasswordSchema>
 
 interface AuthStore {
   user: ResUser | null
@@ -28,6 +30,7 @@ interface AuthStore {
     values: PatchProfileForm & { color: Color; avatar?: string },
   ) => Promise<void>
   logout: () => Promise<void>
+  resetPassword: (values: ResetPasswordForm) => Promise<void>
 }
 export const useAuthStore = create<AuthStore>()((set, get) => ({
   user: null,
@@ -100,6 +103,17 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       set({
         user: null,
       })
+    } finally {
+      set({
+        loading: false,
+      })
+    }
+  },
+
+  resetPassword: async (values) => {
+    set({ loading: true })
+    try {
+      await apiClient.post(AuthApi.ResetPassword, values)
     } finally {
       set({
         loading: false,

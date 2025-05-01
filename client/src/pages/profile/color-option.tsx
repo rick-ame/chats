@@ -1,7 +1,6 @@
 import { Check } from 'lucide-react'
 import { CSSProperties, FC } from 'react'
 
-import { useColor } from '@/components/providers'
 import { Button } from '@/components/ui/button'
 import { Color } from '~'
 
@@ -18,10 +17,10 @@ const colorMapping: Record<Color, string> = {
 
 interface Props {
   color: Color
+  onSelect: (color: Color) => void
+  selected: boolean
 }
-export const ColorOption: FC<Props> = ({ color }) => {
-  const { color: themeColor, setColor } = useColor()
-
+export const ColorOption: FC<Props> = ({ color, onSelect, selected }) => {
   return (
     <Button
       size="sm"
@@ -29,11 +28,11 @@ export const ColorOption: FC<Props> = ({ color }) => {
       className="dark:hover:bg-primary/20 w-full bg-gray-100 text-[12px] dark:bg-gray-800"
       style={{ '--theme-color': colorMapping[color] } as CSSProperties}
       onClick={() => {
-        setColor(color)
+        onSelect(color)
       }}
     >
       <span className="bg-(--theme-color) size-4 shrink-0 rounded-full">
-        {color === themeColor && <Check className="text-white" />}
+        {selected && <Check className="text-white" />}
       </span>
       <span className="text-foreground capitalize">{color}</span>
     </Button>
