@@ -51,7 +51,7 @@ const App: FC = () => {
               <Route path="/" element={<Private />}>
                 <Route path="profile" element={<Profile />} />
                 <Route path="" element={<Setup />}>
-                  <Route path="chat" element={<Chat />} />
+                  <Route path="" element={<Chat />} />
                 </Route>
               </Route>
               <Route path="*" element={<Navigate to="/login" />} />

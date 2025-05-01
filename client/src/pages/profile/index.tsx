@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, ImagePlus, Loader, Mail, SquareUser, X } from 'lucide-react'
+import { ArrowLeft, Loader, Mail, SquareUser } from 'lucide-react'
 import { motion } from 'motion/react'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -10,8 +10,6 @@ import { Background } from '@/components/background'
 import { MButton } from '@/components/m-button'
 import { MInput } from '@/components/m-input'
 import { useColor } from '@/components/providers'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -24,6 +22,7 @@ import { UpdateProfileForm, useAuthStore } from '@/store'
 import { Color, ResError, updateProfileScheme } from '~'
 
 import { ColorOption } from './color-option'
+import { ProfileAvatar } from './profile-avatar'
 
 const colors = Color.options
 
@@ -34,12 +33,14 @@ const Profile: FC = () => {
 
   const {
     email,
-    avatar,
+    avatar = '',
     firstName = '',
     profileSetup,
     color: userColor,
     lastName = '',
   } = user!
+
+  const [image, setImage] = useState(avatar)
 
   const form = useForm<UpdateProfileForm>({
     resolver: zodResolver(updateProfileScheme),
@@ -55,8 +56,12 @@ const Profile: FC = () => {
       await updateProfile({
         ...values,
         color,
+        avatar: image,
       })
       toast.success('Profile updated')
+      if (!profileSetup) {
+        navigate('/')
+      }
     } catch (error) {
       handleError<ResError>(error)
     }
@@ -100,41 +105,7 @@ const Profile: FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="relative mx-auto w-fit">
-                <div className="group rounded-full">
-                  <Avatar
-                    className="size-20"
-                    onClick={() => {
-                      console.log('avatar clicked')
-                    }}
-                  >
-                    <AvatarImage src={avatar} alt="Avatar" />
-                    <AvatarFallback className="bg-primary/70 text-primary-foreground text-4xl font-bold">
-                      {(firstName?.charAt(0) || email.charAt(0)).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <button
-                    className="text-primary absolute bottom-0 left-0 right-0 top-0 hidden items-center justify-center rounded-full bg-black/80 group-hover:flex"
-                    type="button"
-                    onClick={() => {
-                      console.log('upload avatar clicked')
-                    }}
-                  >
-                    <ImagePlus />
-                  </button>
-                </div>
-                <Button
-                  size="icon"
-                  variant="destructive"
-                  className="absolute -right-1.5 top-0 size-7 rounded-full"
-                  type="button"
-                  onClick={() => {
-                    console.log('remove')
-                  }}
-                >
-                  <X />
-                </Button>
-              </div>
+              <ProfileAvatar image={image} setImage={setImage} />
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {colors.map((color, i) => (
                   <ColorOption key={i} color={color} />
