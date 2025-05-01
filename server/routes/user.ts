@@ -1,13 +1,9 @@
 import { Router } from 'express'
 import { z } from 'zod'
 
-import {
-  extendedPatchSchema,
-  getUserInfo,
-  patchProfile,
-} from '@/controllers/user'
+import { getUserInfo, patchProfile } from '@/controllers/user'
 import { validate, verifyToken } from '@/middlewares'
-import { UserApi } from '~'
+import { extendedPatchSchema, UserApi } from '~'
 
 export const routes = Router()
 

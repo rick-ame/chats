@@ -4,7 +4,7 @@ import { create } from 'zustand'
 import { apiClient, handleError } from '@/lib/api-client'
 import {
   AuthApi,
-  Color,
+  extendedPatchSchema,
   loginSchema,
   patchProfileScheme,
   resetPasswordSchema,
@@ -26,9 +26,7 @@ interface AuthStore {
   checkAuth: () => Promise<void>
   login: (values: LoginForm) => Promise<ResUser>
   signup: (values: SignupForm) => Promise<void>
-  patchProfile: (
-    values: PatchProfileForm & { color: Color; avatar?: string },
-  ) => Promise<void>
+  patchProfile: (values: z.infer<typeof extendedPatchSchema>) => Promise<void>
   logout: () => Promise<void>
   resetPassword: (values: ResetPasswordForm) => Promise<void>
 }

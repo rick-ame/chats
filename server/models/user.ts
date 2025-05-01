@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose'
 
-import { Color, User } from '~'
+import { User } from '~'
 
 const userSchema = new Schema<User>(
   {
@@ -26,7 +26,7 @@ const userSchema = new Schema<User>(
     },
     color: {
       type: String,
-      default: Color.enum.violet,
+      required: false,
     },
     profileSetup: {
       type: Boolean,

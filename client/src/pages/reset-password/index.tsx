@@ -41,7 +41,7 @@ const ResetPassword: FC = () => {
       await resetPassword(values)
       toast.success('Password updated')
       setTimeout(() => {
-        navigate(-1)
+        navigate('/')
       }, 1000)
     } catch (error) {
       handleError(error)

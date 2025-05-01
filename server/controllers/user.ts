@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { logger } from '@/lib'
 import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
-import { Color, patchProfileScheme, ResError, ResUser, User } from '~'
+import { extendedPatchSchema, ResError, ResUser, User } from '~'
 
 export const getUserInfo: RequestHandler<
   unknown,
@@ -38,10 +38,6 @@ export const getUserInfo: RequestHandler<
   }
 }
 
-export const extendedPatchSchema = patchProfileScheme.extend({
-  color: Color,
-  avatar: z.string().optional(),
-})
 export const patchProfile: RequestHandler<
   unknown,
   Partial<ResUser> | ResError,

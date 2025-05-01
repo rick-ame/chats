@@ -6,6 +6,7 @@ import {
   use,
   useCallback,
   useLayoutEffect,
+  useState,
 } from 'react'
 import { useLocalStorage } from 'react-use'
 
@@ -13,7 +14,8 @@ import { useAuthStore } from '@/store'
 import { Color } from '~'
 
 const ColorContext = createContext<{
-  setColor: (color: Color) => void
+  color?: Color
+  setColor: (color?: Color) => void
 }>({
   setColor: () => {
     throw new Error(
@@ -23,28 +25,30 @@ const ColorContext = createContext<{
 })
 const ColorProvider: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useAuthStore()
-  const [themeColor, setThemeColor] = useLocalStorage<Color>('theme-color')
+  const [storageColor, setStorageColor] = useLocalStorage<Color>('theme-color')
+  const [color, setColor] = useState<Color>()
 
-  const setColor = useCallback((color: Color) => {
-    document.documentElement.setAttribute('data-color', color)
+  const setThemeColor = useCallback((color?: Color) => {
+    setColor(color)
+    document.documentElement.setAttribute('data-color', color || '')
   }, [])
 
   useLayoutEffect(() => {
-    if (user?.color && user.color !== themeColor) {
-      setColor(user.color)
+    if (user?.color && user.color !== storageColor) {
       setThemeColor(user.color)
-    } else if (themeColor) {
-      setColor(themeColor)
+      setStorageColor(user.color)
+    } else if (storageColor) {
+      setThemeColor(storageColor)
     }
-  }, [setColor, setThemeColor, user?.color, themeColor])
+  }, [setThemeColor, setStorageColor, user?.color, storageColor])
 
   return (
-    <ColorContext.Provider value={{ setColor }}>
+    <ColorContext.Provider value={{ color, setColor: setThemeColor }}>
       {children}
     </ColorContext.Provider>
   )
 }
-export const useThemeColor = () => use(ColorContext).setColor
+export const useThemeColor = () => use(ColorContext)
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (

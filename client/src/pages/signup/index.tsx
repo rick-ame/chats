@@ -37,7 +37,9 @@ const Signup: FC = () => {
   const onSignup = async (values: SignupForm) => {
     try {
       await signup(values)
-      navigate('/profile')
+      navigate('/profile', {
+        replace: true,
+      })
     } catch (error) {
       const errorRes = handleError<ResError>(error)
       if (errorRes?.data.code === ClientErrorCode.EmailRegistered) {

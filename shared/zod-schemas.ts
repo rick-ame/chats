@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { Color } from './models'
+
 export const loginSchema = z.object({
   email: z.string().email('Please input valid email'),
   password: z
@@ -21,6 +23,10 @@ export const patchProfileScheme = z.object({
   email: z.string().email('Please input valid email'),
   firstName: z.string().trim().nonempty('First name is required'),
   lastName: z.string().trim().nonempty('Last name is required'),
+})
+export const extendedPatchSchema = patchProfileScheme.extend({
+  color: Color.optional(),
+  avatar: z.string().optional(),
 })
 
 export const resetPasswordSchema = z

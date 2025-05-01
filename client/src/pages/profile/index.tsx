@@ -39,9 +39,8 @@ const Profile: FC = () => {
     color: userColor,
   } = user!
 
-  const setThemeColor = useThemeColor()
-  const [color, setColor] = useState<Color>(userColor)
-  const revertThemeColorRef = useRef(true)
+  const { color, setColor } = useThemeColor()
+  const revertColorRef = useRef(true)
 
   const [image, setImage] = useState(avatar)
 
@@ -63,14 +62,10 @@ const Profile: FC = () => {
         color,
         avatar: avatar === image ? undefined : image,
       })
-      revertThemeColorRef.current = false
+      revertColorRef.current = false
       toast.success('Profile updated')
       setTimeout(() => {
-        if (!profileSetup) {
-          navigate('/')
-        } else {
-          navigate(-1)
-        }
+        navigate('/')
       }, 1000)
     } catch (error) {
       const errorRes = handleError(error)
@@ -82,11 +77,11 @@ const Profile: FC = () => {
 
   useEffect(() => {
     return () => {
-      if (revertThemeColorRef.current) {
-        setThemeColor(userColor)
+      if (revertColorRef.current) {
+        setColor(userColor)
       }
     }
-  }, [setThemeColor, userColor])
+  }, [setColor, userColor])
 
   return (
     <Background>
@@ -127,15 +122,7 @@ const Profile: FC = () => {
               />
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {colors.map((c, i) => (
-                  <ColorOption
-                    key={i}
-                    color={c}
-                    onSelect={(color) => {
-                      setColor(color)
-                      setThemeColor(color)
-                    }}
-                    selected={c === color}
-                  />
+                  <ColorOption key={i} color={c} />
                 ))}
               </div>
             </motion.section>

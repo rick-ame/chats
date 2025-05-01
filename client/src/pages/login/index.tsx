@@ -36,9 +36,13 @@ const Login: FC = () => {
     try {
       const { profileSetup } = await login(values)
       if (profileSetup) {
-        navigate('/')
+        navigate('/', {
+          replace: true,
+        })
       } else {
-        navigate('/profile')
+        navigate('/profile', {
+          replace: true,
+        })
       }
     } catch (error) {
       const errorRes = handleError<ResError>(error)
