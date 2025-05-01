@@ -2,21 +2,19 @@ import { z } from 'zod'
 import { create } from 'zustand'
 
 import { apiClient, handleError } from '@/lib/api-client'
-import { AuthApi, UserApi } from '~/apis'
-import { UserRes } from '~/models'
-import { loginSchema, signupSchema } from '~/zod-schemas'
+import { AuthApi, loginSchema, ResUser, signupSchema, UserApi } from '~'
 
 export type LoginForm = z.infer<typeof loginSchema>
 export type SignupForm = z.infer<typeof signupSchema>
 
 interface AuthStore {
-  user?: UserRes
+  user?: ResUser
   isCheckingAuth: boolean
   loading: boolean
 
   checkAuth: () => Promise<void>
-  login: (values: LoginForm) => Promise<UserRes>
-  signup: (values: SignupForm) => Promise<UserRes>
+  login: (values: LoginForm) => Promise<ResUser>
+  signup: (values: SignupForm) => Promise<ResUser>
 }
 export const useAuthStore = create<AuthStore>()((set) => ({
   userInfo: undefined,
@@ -39,7 +37,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   login: async (values) => {
     set({ loading: true })
     try {
-      const res = await apiClient.post<UserRes>(AuthApi.Login, values)
+      const res = await apiClient.post<ResUser>(AuthApi.Login, values)
       set({
         user: res.data,
       })
@@ -54,7 +52,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   signup: async (values) => {
     set({ loading: true })
     try {
-      const res = await apiClient.post<UserRes>(AuthApi.Signup, values)
+      const res = await apiClient.post<ResUser>(AuthApi.Signup, values)
       set({
         user: res.data,
       })

@@ -17,8 +17,7 @@ import {
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
 import { SignupForm, useAuthStore } from '@/store'
-import { ClientErrorCode, ResError } from '~/response-error'
-import { signupSchema } from '~/zod-schemas'
+import { ClientErrorCode, ResError, signupSchema } from '~'
 
 const Signup: FC = () => {
   const { loading, signup } = useAuthStore()

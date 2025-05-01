@@ -1,14 +1,19 @@
-export const enum Color {
-  Blue = 'blue',
-  Gray = 'gray',
-  Green = 'green',
-  Orange = 'orange',
-  Red = 'red',
-  Rose = 'rose',
-  Violet = 'violet',
-  Yellow = 'yellow',
-}
-export const defaultColor = Color.Violet
+import { z } from 'zod'
+
+const colors = [
+  'blue',
+  'gray',
+  'green',
+  'orange',
+  'red',
+  'rose',
+  'violet',
+  'yellow',
+] as const
+export const Color = z.enum(colors)
+export type Color = z.infer<typeof Color>
+
+export const defaultColor = Color.enum.violet
 
 export type User = {
   email: string
@@ -19,5 +24,3 @@ export type User = {
   color: Color
   profileSetup: boolean
 }
-
-export type UserRes = Omit<User, 'password'> & { id: string }

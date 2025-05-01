@@ -5,9 +5,13 @@ import { z } from 'zod'
 
 import { JWT_KEY, logger } from '@/lib'
 import { UserModel } from '@/models/user'
-import { UserRes } from '~/models'
-import { ClientErrorCode, ResError } from '~/response-error'
-import { loginSchema, signupSchema } from '~/zod-schemas'
+import {
+  ClientErrorCode,
+  loginSchema,
+  ResError,
+  ResUser,
+  signupSchema,
+} from '~'
 
 const maxAge = 1000 * 60 * 60 * 24 * 3
 
@@ -17,7 +21,7 @@ const createToken = (email: string, userId: string) => {
 
 export const signup: RequestHandler<
   unknown,
-  UserRes | ResError,
+  ResUser | ResError,
   z.infer<typeof signupSchema>
 > = async (req, res) => {
   try {
@@ -57,7 +61,7 @@ export const signup: RequestHandler<
 
 export const login: RequestHandler<
   unknown,
-  UserRes | ResError,
+  ResUser | ResError,
   z.infer<typeof loginSchema>
 > = async (req, res) => {
   try {

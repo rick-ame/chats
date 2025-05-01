@@ -9,7 +9,7 @@
     "noUncheckedSideEffectImports": true,
 
     "paths": {
-      "~/*": ["./shared/*"]
+      "~": ["./shared"]
     }
   }
 }

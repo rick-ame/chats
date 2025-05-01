@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import { getUserInfo } from '@/controllers/user'
 import { verifyToken } from '@/middlewares'
-import { UserApi } from '~/apis'
+import { UserApi } from '~'
 
 export const routes = Router()
 

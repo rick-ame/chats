@@ -3,12 +3,11 @@ import { RequestHandler } from 'express'
 import { logger } from '@/lib'
 import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
-import { UserRes } from '~/models'
-import { ResError } from '~/response-error'
+import { ResError, ResUser } from '~'
 
 export const getUserInfo: RequestHandler<
   unknown,
-  UserRes | ResError,
+  ResUser | ResError,
   unknown,
   unknown,
   Locals

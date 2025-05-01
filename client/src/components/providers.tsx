@@ -9,11 +9,13 @@ import {
 } from 'react'
 
 import { useAuthStore } from '@/store'
-import { Color, defaultColor } from '~/models'
+import { Color, defaultColor } from '~'
 
 const ColorContext = createContext<{
+  color: Color
   setColor: (color: Color) => void
 }>({
+  color: defaultColor,
   setColor: () => {
     throw new Error(
       `You should implement ColorProvider first before setting color`,
@@ -32,7 +34,7 @@ const ColorProvider: FC<PropsWithChildren<{ color: Color }>> = ({
   }, [color])
 
   return (
-    <ColorContext.Provider value={{ setColor }}>
+    <ColorContext.Provider value={{ color, setColor }}>
       {children}
     </ColorContext.Provider>
   )

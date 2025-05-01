@@ -5,7 +5,7 @@ import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 
-import { prefix } from '~/apis'
+import { prefix } from '~'
 
 import { checkEnv, connectDB, logger, PORT } from './lib'
 import { routes as authRoutes } from './routes/auth'

@@ -1,7 +1,7 @@
 import { hash } from 'argon2'
 import { model, Schema } from 'mongoose'
 
-import { defaultColor, User } from '~/models'
+import { defaultColor, User } from '~'
 
 const userSchema = new Schema<User>(
   {

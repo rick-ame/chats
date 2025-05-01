@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { JWT_KEY } from '@/lib'
-import { ResError } from '~/response-error'
+import { ResError } from '~'
 
 export const validate =
   (schema: z.AnyZodObject): RequestHandler =>

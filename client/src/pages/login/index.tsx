@@ -18,8 +18,7 @@ import {
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
 import { LoginForm, useAuthStore } from '@/store'
-import { ResError } from '~/response-error'
-import { loginSchema } from '~/zod-schemas'
+import { loginSchema, ResError } from '~'
 
 const Login: FC = () => {
   const { loading, login } = useAuthStore()

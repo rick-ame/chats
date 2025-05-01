@@ -3,8 +3,7 @@ import { z } from 'zod'
 
 import { login, signup } from '@/controllers/auth'
 import { validate } from '@/middlewares'
-import { AuthApi } from '~/apis'
-import { loginSchema, signupSchema } from '~/zod-schemas'
+import { AuthApi, loginSchema, signupSchema } from '~'
 
 export const routes = Router()
 

@@ -1,6 +1,6 @@
 import { ArrowLeft, ImagePlus, X } from 'lucide-react'
 import { motion } from 'motion/react'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Background } from '@/components/background'
@@ -10,25 +10,24 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { formatDate } from '@/lib/utils'
 import { useAuthStore } from '@/store'
-import { Color } from '~/models'
+import { Color } from '~'
 
-const colors = [
-  Color.Blue,
-  Color.Green,
-  Color.Orange,
-  Color.Red,
-  Color.Rose,
-  Color.Violet,
-  Color.Yellow,
-  // Color.Gray,
-]
+import { ColorOption } from './color-option'
+
+const colors = Color.options
 
 const Profile: FC = () => {
   const navigate = useNavigate()
-  const { setColor } = useColor()
   const { user } = useAuthStore()
+  const { setColor } = useColor()
 
-  const { email, avatar, firstName, profileSetup } = user!
+  const { email, avatar, firstName, profileSetup, color: userColor } = user!
+
+  useEffect(() => {
+    return () => {
+      setColor(userColor)
+    }
+  }, [setColor, userColor])
 
   return (
     <Background>
@@ -103,6 +102,11 @@ const Profile: FC = () => {
                 <X />
               </Button>
             </div>
+            <div className="mt-4 grid grid-cols-4 gap-2">
+              {colors.map((color, i) => (
+                <ColorOption key={i} color={color} />
+              ))}
+            </div>
           </motion.section>
 
           <motion.section
@@ -139,10 +143,7 @@ const Profile: FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-primary/85 hover:bg-primary w-full rounded-lg font-bold shadow-lg"
-            onClick={() => {
-              const colorIndex = Math.floor(Math.random() * colors.length)
-              setColor(colors[colorIndex])
-            }}
+            onClick={() => {}}
           >
             {profileSetup ? 'Update' : 'GO!'}
           </MButton>
