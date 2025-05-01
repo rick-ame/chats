@@ -6,15 +6,15 @@ import {
   AuthApi,
   Color,
   loginSchema,
+  patchProfileScheme,
   ResUser,
   signupSchema,
-  updateProfileScheme,
   UserApi,
 } from '~'
 
 export type LoginForm = z.infer<typeof loginSchema>
 export type SignupForm = z.infer<typeof signupSchema>
-export type UpdateProfileForm = z.infer<typeof updateProfileScheme>
+export type PatchProfileForm = z.infer<typeof patchProfileScheme>
 
 interface AuthStore {
   user?: ResUser
@@ -24,11 +24,11 @@ interface AuthStore {
   checkAuth: () => Promise<void>
   login: (values: LoginForm) => Promise<ResUser>
   signup: (values: SignupForm) => Promise<void>
-  updateProfile: (
-    values: UpdateProfileForm & { color: Color; avatar?: string },
+  patchProfile: (
+    values: PatchProfileForm & { color: Color; avatar?: string },
   ) => Promise<void>
 }
-export const useAuthStore = create<AuthStore>()((set) => ({
+export const useAuthStore = create<AuthStore>()((set, get) => ({
   userInfo: undefined,
   loading: false,
   isCheckingAuth: true,
@@ -75,12 +75,15 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     }
   },
 
-  updateProfile: async (values) => {
+  patchProfile: async (values) => {
     set({ loading: true })
     try {
-      const res = await apiClient.post<ResUser>(UserApi.UserInfo, values)
+      const res = await apiClient.patch<ResUser>(UserApi.UserInfo, values)
       set({
-        user: res.data,
+        user: {
+          ...get().user,
+          ...res.data,
+        },
       })
     } finally {
       set({

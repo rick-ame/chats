@@ -2,9 +2,9 @@ import { Router } from 'express'
 import { z } from 'zod'
 
 import {
-  extendedUpdateSchema,
+  extendedPatchSchema,
   getUserInfo,
-  updateProfile,
+  patchProfile,
 } from '@/controllers/user'
 import { validate, verifyToken } from '@/middlewares'
 import { UserApi } from '~'
@@ -13,13 +13,13 @@ export const routes = Router()
 
 routes.get(UserApi.UserInfo, verifyToken, getUserInfo)
 
-routes.post(
+routes.patch(
   UserApi.UserInfo,
   verifyToken,
   validate(
     z.object({
-      body: extendedUpdateSchema,
+      body: extendedPatchSchema,
     }),
   ),
-  updateProfile,
+  patchProfile,
 )

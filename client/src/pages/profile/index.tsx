@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
-import { UpdateProfileForm, useAuthStore } from '@/store'
-import { Color, ResError, updateProfileScheme } from '~'
+import { PatchProfileForm, useAuthStore } from '@/store'
+import { Color, patchProfileScheme, ResError } from '~'
 
 import { ColorOption } from './color-option'
 import { ProfileAvatar } from './profile-avatar'
@@ -28,7 +28,7 @@ const colors = Color.options
 
 const Profile: FC = () => {
   const navigate = useNavigate()
-  const { user, loading, updateProfile } = useAuthStore()
+  const { user, loading, patchProfile } = useAuthStore()
   const { color, setColor } = useColor()
 
   const {
@@ -42,8 +42,8 @@ const Profile: FC = () => {
 
   const [image, setImage] = useState(avatar)
 
-  const form = useForm<UpdateProfileForm>({
-    resolver: zodResolver(updateProfileScheme),
+  const form = useForm<PatchProfileForm>({
+    resolver: zodResolver(patchProfileScheme),
     defaultValues: {
       email,
       firstName,
@@ -51,12 +51,12 @@ const Profile: FC = () => {
     },
   })
 
-  const onSubmit = async (values: UpdateProfileForm) => {
+  const onSubmit = async (values: PatchProfileForm) => {
     try {
-      await updateProfile({
+      await patchProfile({
         ...values,
         color,
-        avatar: image,
+        avatar: avatar === image ? undefined : image,
       })
       toast.success('Profile updated')
       if (!profileSetup) {

@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { logger } from '@/lib'
 import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
-import { Color, ResError, ResUser, updateProfileScheme } from '~'
+import { Color, patchProfileScheme, ResError, ResUser, User } from '~'
 
 export const getUserInfo: RequestHandler<
   unknown,
@@ -38,14 +38,14 @@ export const getUserInfo: RequestHandler<
   }
 }
 
-export const extendedUpdateSchema = updateProfileScheme.extend({
+export const extendedPatchSchema = patchProfileScheme.extend({
   color: Color,
   avatar: z.string().optional(),
 })
-export const updateProfile: RequestHandler<
+export const patchProfile: RequestHandler<
   unknown,
-  ResUser | ResError,
-  z.infer<typeof extendedUpdateSchema>,
+  Partial<ResUser> | ResError,
+  z.infer<typeof extendedPatchSchema>,
   unknown,
   Locals
 > = async (req, res) => {
@@ -53,14 +53,19 @@ export const updateProfile: RequestHandler<
     const userId = res.locals.userId
     const { email, firstName, lastName, color, avatar } = req.body
 
+    const updates: Partial<User> = {
+      email,
+      firstName,
+      lastName,
+      color,
+    }
+    if (avatar) {
+      updates.avatar = avatar
+    }
     const user = await UserModel.findByIdAndUpdate(
       userId,
       {
-        email,
-        firstName,
-        lastName,
-        color,
-        avatar,
+        ...updates,
         profileSetup: true,
       },
       {
@@ -79,8 +84,8 @@ export const updateProfile: RequestHandler<
       profileSetup: user.profileSetup,
       firstName: user.firstName,
       lastName: user.lastName,
-      avatar: user.avatar,
       color: user.color,
+      avatar: avatar ? undefined : user.avatar,
     })
   } catch (error) {
     logger.error(error)

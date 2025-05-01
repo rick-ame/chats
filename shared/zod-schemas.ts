@@ -17,7 +17,7 @@ export const signupSchema = loginSchema
     message: 'Please input same password',
   })
 
-export const updateProfileScheme = z.object({
+export const patchProfileScheme = z.object({
   email: z.string().email('Please input valid email'),
   firstName: z.string().trim().nonempty('First name is required'),
   lastName: z.string().trim().nonempty('Last name is required'),
