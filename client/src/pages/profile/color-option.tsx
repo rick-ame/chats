@@ -25,16 +25,17 @@ export const ColorOption: FC<Props> = ({ color }) => {
   return (
     <Button
       size="sm"
+      type="button"
       className="dark:hover:bg-primary/20 w-full bg-gray-100 text-[12px] dark:bg-gray-800"
       style={{ '--theme-color': colorMapping[color] } as CSSProperties}
       onClick={() => {
         setColor(color)
       }}
     >
-      <span className="bg-(--theme-color) size-4 shrink-0 rounded-full capitalize">
+      <span className="bg-(--theme-color) size-4 shrink-0 rounded-full">
         {color === themeColor && <Check className="text-white" />}
       </span>
-      <span className="text-foreground">{color}</span>
+      <span className="text-foreground capitalize">{color}</span>
     </Button>
   )
 }

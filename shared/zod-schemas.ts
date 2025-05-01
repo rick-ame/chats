@@ -16,3 +16,9 @@ export const signupSchema = loginSchema
     path: ['confirm'],
     message: 'Please input same password',
   })
+
+export const updateProfileScheme = z.object({
+  email: z.string().email('Please input valid email'),
+  firstName: z.string().trim().nonempty('First name is required'),
+  lastName: z.string().trim().nonempty('Last name is required'),
+})
