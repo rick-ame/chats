@@ -17,7 +17,7 @@ export type SignupForm = z.infer<typeof signupSchema>
 export type PatchProfileForm = z.infer<typeof patchProfileScheme>
 
 interface AuthStore {
-  user?: ResUser
+  user: ResUser | null
   isCheckingAuth: boolean
   loading: boolean
 
@@ -27,9 +27,10 @@ interface AuthStore {
   patchProfile: (
     values: PatchProfileForm & { color: Color; avatar?: string },
   ) => Promise<void>
+  logout: () => Promise<void>
 }
 export const useAuthStore = create<AuthStore>()((set, get) => ({
-  userInfo: undefined,
+  user: null,
   loading: false,
   isCheckingAuth: true,
 
@@ -84,6 +85,20 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
           ...get().user,
           ...res.data,
         },
+      })
+    } finally {
+      set({
+        loading: false,
+      })
+    }
+  },
+
+  logout: async () => {
+    set({ loading: true })
+    try {
+      await apiClient.post(AuthApi.Logout)
+      set({
+        user: null,
       })
     } finally {
       set({

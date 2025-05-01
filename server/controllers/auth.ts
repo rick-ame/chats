@@ -102,3 +102,26 @@ export const login: RequestHandler<
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }
+
+export const logout: RequestHandler<unknown, { message: string }> = async (
+  req,
+  res,
+) => {
+  try {
+    res.cookie('jwt', '', {
+      maxAge: 1,
+      secure: true,
+      sameSite: 'lax',
+      httpOnly: true,
+    })
+    res.status(200).json({
+      message: 'Logout Successfully',
+    })
+  } catch (error) {
+    logger.error(error)
+
+    res.json({
+      message: 'Internal server error',
+    })
+  }
+}

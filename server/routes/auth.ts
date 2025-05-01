@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { z } from 'zod'
 
-import { login, signup } from '@/controllers/auth'
+import { login, logout, signup } from '@/controllers/auth'
 import { validate } from '@/middlewares'
 import { AuthApi, loginSchema, signupSchema } from '~'
 
@@ -26,3 +26,5 @@ routes.post(
   ),
   login,
 )
+
+routes.post(AuthApi.Logout, logout)
