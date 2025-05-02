@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, Loader, Mail, SquareUser } from 'lucide-react'
+import { ArrowLeft, Loader, Mail, UserRound } from 'lucide-react'
 import { motion } from 'motion/react'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
@@ -116,15 +116,16 @@ const Profile: FC = () => {
             </motion.section>
 
             <motion.section
-              className="bg-primary/20 rounded-lg px-4 py-6"
+              className="py-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="email"
+                  disabled={!profileSetup}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -146,7 +147,7 @@ const Profile: FC = () => {
                     <FormItem>
                       <FormControl>
                         <MInput
-                          icon={SquareUser}
+                          icon={UserRound}
                           placeholder="First Name"
                           {...field}
                         />
@@ -162,7 +163,7 @@ const Profile: FC = () => {
                     <FormItem>
                       <FormControl>
                         <MInput
-                          icon={SquareUser}
+                          icon={UserRound}
                           placeholder="Last Name"
                           {...field}
                         />
