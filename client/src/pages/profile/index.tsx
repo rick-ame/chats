@@ -90,9 +90,9 @@ const Profile: FC = () => {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.5 }}
-        className="dark:bg-background/30 bg-secondary/50 w-full max-w-md rounded-xl p-8 shadow-2xl backdrop-blur-lg backdrop-filter"
+        className="dark:bg-background/30 bg-secondary/50 w-full max-w-md rounded-xl p-4 shadow-2xl backdrop-blur-lg backdrop-filter sm:p-8"
       >
-        <h2 className="text-primary/90 relative mb-6 bg-clip-text text-center text-3xl font-bold">
+        <h2 className="text-primary/90 relative mb-6 bg-clip-text text-center text-2xl font-bold sm:text-3xl">
           {profileSetup && (
             <Link to="/" className="absolute -left-2 top-1/2 -translate-y-1/2">
               <ArrowLeft className="size-8" />
