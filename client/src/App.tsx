@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import { BrowserRouter, Navigate, useRoutes } from 'react-router'
 
 import { Authed, Private, Setup } from './components/auth'
 import { Background } from './components/background'
@@ -14,6 +14,59 @@ const Signup = lazy(() => import('./pages/signup'))
 const Profile = lazy(() => import('./pages/profile'))
 const ResetPassword = lazy(() => import('./pages/reset-password'))
 const Chat = lazy(() => import('./pages/chat'))
+
+const Router: FC = () => {
+  return useRoutes([
+    {
+      path: '/login',
+      element: (
+        <Authed>
+          <Login />
+        </Authed>
+      ),
+    },
+    {
+      path: '/signup',
+      element: (
+        <Authed>
+          <Signup />
+        </Authed>
+      ),
+    },
+    {
+      path: '/',
+      element: <Private />,
+      children: [
+        {
+          path: 'profile',
+          element: <Profile />,
+        },
+        {
+          path: '',
+          element: <Setup />,
+          children: [
+            {
+              path: '',
+              element: <Chat />,
+            },
+            {
+              path: 'reset-password',
+              element: <ResetPassword />,
+            },
+            {
+              path: '*',
+              element: <Navigate to="/" replace />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: '*',
+      element: <Navigate to="/login" replace />,
+    },
+  ])
+}
 
 const App: FC = () => {
   const { checkingAuth, checkAuth } = useAuthStore()
@@ -34,32 +87,7 @@ const App: FC = () => {
         <Background>
           <Suspense fallback={<LoadingSkeleton />}>
             <BrowserRouter>
-              <Routes>
-                <Route
-                  path="/login"
-                  element={
-                    <Authed>
-                      <Login />
-                    </Authed>
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <Authed>
-                      <Signup />
-                    </Authed>
-                  }
-                />
-                <Route path="/" element={<Private />}>
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="" element={<Setup />}>
-                    <Route path="" element={<Chat />} />
-                    <Route path="reset-password" element={<ResetPassword />} />
-                  </Route>
-                </Route>
-                <Route path="*" element={<Navigate to="/login" />} />
-              </Routes>
+              <Router />
             </BrowserRouter>
           </Suspense>
         </Background>

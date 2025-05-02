@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock, Mail } from 'lucide-react'
-import { motion } from 'motion/react'
 import { FC } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 
 import { MButton } from '@/components/m-button'
 import { MInput } from '@/components/m-input'
+import { Main } from '@/components/main'
 import { PasswordStrengthMeter } from '@/components/password-strength-meter'
 import {
   Form,
@@ -52,12 +52,7 @@ const Signup: FC = () => {
   }
 
   return (
-    <motion.main
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="dark:bg-background/30 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
-    >
+    <Main>
       <div className="p-8">
         <h2 className="from-primary via-primary/80 to-primary mb-6 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
           Create Account
@@ -126,7 +121,7 @@ const Signup: FC = () => {
           </form>
         </Form>
       </div>
-      <div className="bg-primary/5 flex justify-center px-8 py-4">
+      <footer className="bg-primary/5 flex justify-center px-8 py-4">
         <p className="text-foreground/70 text-sm">
           Already have an account?
           <Link
@@ -136,8 +131,8 @@ const Signup: FC = () => {
             Login
           </Link>
         </p>
-      </div>
-    </motion.main>
+      </footer>
+    </Main>
   )
 }
 

@@ -30,7 +30,7 @@ const FloatingShape: FC<{
 
 export const Background: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="to-secondary via-primary/30 relative flex min-h-dvh min-w-[360px] items-center justify-center overflow-hidden bg-gradient-to-br from-gray-300 p-4 dark:from-gray-900">
+    <div className="via-primary/40 to-primary/20 dark:via-primary/30 from-primary/15 relative flex min-h-dvh min-w-[360px] items-center justify-center overflow-hidden bg-gradient-to-br p-4">
       <FloatingShape
         color="bg-primary/50 dark:bg-primary/30"
         size="w-64 h-64"
@@ -46,10 +46,10 @@ export const Background: FC<PropsWithChildren> = ({ children }) => {
         delay={5}
       />
       <FloatingShape
-        color="bg-primary/60"
+        color="bg-primary/80"
         size="w-32 h-32"
         top="40%"
-        left="-10%"
+        left="-5%"
         delay={2}
       />
       {children}
