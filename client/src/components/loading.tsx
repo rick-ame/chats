@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { Background } from './background'
 
-export const Loading: FC = () => {
+export const LoadingScreen: FC = () => {
   return (
     <Background>
       <motion.div

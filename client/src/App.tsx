@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, useRoutes } from 'react-router'
 
 import { Authed, Private, Setup } from './components/auth'
 import { Background } from './components/background'
-import { Loading, LoadingSkeleton } from './components/loading'
+import { LoadingScreen, LoadingSkeleton } from './components/loading'
 import { Providers } from './components/providers'
 import { ThemeToggle } from './components/theme-toggle'
 import { Toaster } from './components/ui/sonner'
@@ -82,7 +82,7 @@ const App: FC = () => {
       </div>
       <Toaster />
       {checkingAuth ? (
-        <Loading />
+        <LoadingScreen />
       ) : (
         <Background>
           <Suspense fallback={<LoadingSkeleton />}>
