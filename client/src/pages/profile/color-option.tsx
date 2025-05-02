@@ -33,7 +33,9 @@ export const ColorOption: FC<Props> = ({ color }) => {
       }}
     >
       <span className="bg-(--theme-color) size-3 shrink-0 rounded-full sm:size-4">
-        {color === themeColor && <Check className="text-white" />}
+        {color === themeColor && (
+          <Check className="size-3 text-white sm:size-4" />
+        )}
       </span>
       <span className="text-foreground capitalize">{color}</span>
     </Button>
