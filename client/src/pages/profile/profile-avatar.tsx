@@ -48,7 +48,7 @@ export const ProfileAvatar: FC<Props> = ({ name, image, setImage }) => {
             inputRef.current?.click()
           }}
         >
-          <AvatarImage src={image} alt="Avatar" />
+          <AvatarImage src={image || undefined} alt="Avatar" />
           <AvatarFallback className="bg-primary/70 text-primary-foreground text-4xl font-bold">
             {name.charAt(0).toUpperCase()}
           </AvatarFallback>

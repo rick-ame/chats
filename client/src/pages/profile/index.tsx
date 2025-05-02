@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
-import { PatchProfileForm, useAuthStore } from '@/store'
-import { Color, patchProfileScheme } from '~'
+import { UpdateProfileForm, useAuthStore } from '@/store'
+import { Color, updateProfileScheme } from '~'
 
 import { ColorOption } from './color-option'
 import { ProfileAvatar } from './profile-avatar'
@@ -28,7 +28,7 @@ const colors = Color.options
 
 const Profile: FC = () => {
   const navigate = useNavigate()
-  const { user, loading, patchProfile } = useAuthStore()
+  const { user, loading, updateProfile } = useAuthStore()
 
   const {
     email,
@@ -44,8 +44,8 @@ const Profile: FC = () => {
 
   const [image, setImage] = useState(avatar)
 
-  const form = useForm<PatchProfileForm>({
-    resolver: zodResolver(patchProfileScheme),
+  const form = useForm<UpdateProfileForm>({
+    resolver: zodResolver(updateProfileScheme),
     defaultValues: {
       email,
       firstName,
@@ -55,9 +55,9 @@ const Profile: FC = () => {
 
   const fieldFirstName = useWatch({ name: 'firstName', control: form.control })
 
-  const onSubmit = async (values: PatchProfileForm) => {
+  const onSubmit = async (values: UpdateProfileForm) => {
     try {
-      await patchProfile({
+      await updateProfile({
         ...values,
         color,
         avatar: avatar === image ? undefined : image,

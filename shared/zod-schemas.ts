@@ -19,12 +19,12 @@ export const signupSchema = loginSchema
     message: 'Please input same password',
   })
 
-export const patchProfileScheme = z.object({
+export const updateProfileScheme = z.object({
   email: z.string().email('Please input valid email'),
   firstName: z.string().trim().nonempty('First name is required'),
   lastName: z.string().trim().nonempty('Last name is required'),
 })
-export const extendedPatchSchema = patchProfileScheme.extend({
+export const extendedUpdateSchema = updateProfileScheme.extend({
   color: Color.optional(),
   avatar: z.string().optional(),
 })

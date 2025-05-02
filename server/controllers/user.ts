@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { logger } from '@/lib'
 import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
-import { extendedPatchSchema, ResError, ResUser, User } from '~'
+import { extendedUpdateSchema, ResError, ResUser, User } from '~'
 
 export const getUserInfo: RequestHandler<
   unknown,
@@ -38,10 +38,10 @@ export const getUserInfo: RequestHandler<
   }
 }
 
-export const patchProfile: RequestHandler<
+export const updateProfile: RequestHandler<
   unknown,
   Partial<ResUser> | ResError,
-  z.infer<typeof extendedPatchSchema>,
+  z.infer<typeof extendedUpdateSchema>,
   unknown,
   Locals
 > = async (req, res) => {
@@ -55,7 +55,7 @@ export const patchProfile: RequestHandler<
       lastName,
       color,
     }
-    if (avatar) {
+    if (avatar !== undefined) {
       updates.avatar = avatar
     }
     const user = await UserModel.findByIdAndUpdate(
@@ -81,7 +81,7 @@ export const patchProfile: RequestHandler<
       firstName: user.firstName,
       lastName: user.lastName,
       color: user.color,
-      avatar: avatar ? undefined : user.avatar,
+      avatar: avatar !== undefined ? user.avatar : undefined,
     })
   } catch (error) {
     logger.error(error)

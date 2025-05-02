@@ -4,18 +4,18 @@ import { create } from 'zustand'
 import { apiClient, handleError } from '@/lib/api-client'
 import {
   AuthApi,
-  extendedPatchSchema,
+  extendedUpdateSchema,
   loginSchema,
-  patchProfileScheme,
   resetPasswordSchema,
   ResUser,
   signupSchema,
+  updateProfileScheme,
   UserApi,
 } from '~'
 
 export type LoginForm = z.infer<typeof loginSchema>
 export type SignupForm = z.infer<typeof signupSchema>
-export type PatchProfileForm = z.infer<typeof patchProfileScheme>
+export type UpdateProfileForm = z.infer<typeof updateProfileScheme>
 export type ResetPasswordForm = z.infer<typeof resetPasswordSchema>
 
 interface AuthStore {
@@ -26,7 +26,7 @@ interface AuthStore {
   checkAuth: () => Promise<void>
   login: (values: LoginForm) => Promise<ResUser>
   signup: (values: SignupForm) => Promise<void>
-  patchProfile: (values: z.infer<typeof extendedPatchSchema>) => Promise<void>
+  updateProfile: (values: z.infer<typeof extendedUpdateSchema>) => Promise<void>
   logout: () => Promise<void>
   resetPassword: (values: ResetPasswordForm) => Promise<void>
 }
@@ -79,10 +79,10 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     }
   },
 
-  patchProfile: async (values) => {
+  updateProfile: async (values) => {
     set({ loading: true })
     try {
-      const res = await apiClient.patch<ResUser>(UserApi.UserInfo, values)
+      const res = await apiClient.post<ResUser>(UserApi.UserInfo, values)
       set({
         user: {
           ...get().user,
