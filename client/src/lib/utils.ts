@@ -1,8 +1,22 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+import { Color } from '~'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export const setStorageColor = (color?: Color) => {
+  if (color) {
+    window.localStorage.setItem('theme-color', color)
+  }
+}
+export const getStorageColor = () => {
+  const color = window.localStorage.getItem('theme-color')
+  if (color) {
+    return color as Color
+  }
 }
 
 export function formatDate(input: string | number): string {

@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 
 import { Authed, Private, Setup } from './components/auth'
 import { Loading } from './components/loading'
@@ -15,7 +15,7 @@ const ResetPassword = lazy(() => import('./pages/reset-password'))
 const Chat = lazy(() => import('./pages/chat'))
 
 const App: FC = () => {
-  const { isCheckingAuth, checkAuth } = useAuthStore()
+  const { checkingAuth, checkAuth } = useAuthStore()
 
   useEffect(() => {
     checkAuth()
@@ -27,7 +27,7 @@ const App: FC = () => {
         <ThemeToggle />
       </div>
       <Toaster />
-      {isCheckingAuth ? (
+      {checkingAuth ? (
         <Loading />
       ) : (
         <Suspense fallback={<Loading />}>

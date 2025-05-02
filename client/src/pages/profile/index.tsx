@@ -3,7 +3,7 @@ import { ArrowLeft, Loader, Mail, SquareUser } from 'lucide-react'
 import { motion } from 'motion/react'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
 import { Background } from '@/components/background'
@@ -77,7 +77,7 @@ const Profile: FC = () => {
 
   useEffect(() => {
     return () => {
-      if (revertColorRef.current) {
+      if (revertColorRef.current && userColor) {
         setColor(userColor)
       }
     }
@@ -94,15 +94,9 @@ const Profile: FC = () => {
       >
         <h2 className="text-primary/90 relative mb-6 bg-clip-text text-center text-3xl font-bold">
           {profileSetup && (
-            <div
-              className="absolute -left-2 top-1/2 -translate-y-1/2"
-              onClick={() => {
-                navigate(-1)
-              }}
-            >
+            <Link to="/" className="absolute -left-2 top-1/2 -translate-y-1/2">
               <ArrowLeft className="size-8" />
-              <span className="sr-only">Back</span>
-            </div>
+            </Link>
           )}
           Profile Information
         </h2>

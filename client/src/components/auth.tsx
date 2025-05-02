@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router'
 import { toast } from 'sonner'
 
 import { useAuthStore } from '@/store'

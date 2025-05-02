@@ -3,7 +3,7 @@ import { ArrowLeft, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
 import { FC } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
 import { Background } from '@/components/background'
@@ -57,15 +57,9 @@ const ResetPassword: FC = () => {
         className="dark:bg-background/30 w-full max-w-md overflow-hidden rounded-2xl bg-gray-100 p-8 shadow-2xl backdrop-blur-xl backdrop-filter"
       >
         <h2 className="text-primary/90 relative mb-6 bg-clip-text text-center text-3xl font-bold">
-          <div
-            className="absolute -left-2 top-1/2 -translate-y-1/2"
-            onClick={() => {
-              navigate(-1)
-            }}
-          >
+          <Link to="/" className="absolute -left-2 top-1/2 -translate-y-1/2">
             <ArrowLeft className="size-8" />
-            <span className="sr-only">Back</span>
-          </div>
+          </Link>
           Reset Password
         </h2>
         <Form {...form}>

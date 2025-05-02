@@ -20,7 +20,7 @@ export type ResetPasswordForm = z.infer<typeof resetPasswordSchema>
 
 interface AuthStore {
   user: ResUser | null
-  isCheckingAuth: boolean
+  checkingAuth: boolean
   loading: boolean
 
   checkAuth: () => Promise<void>
@@ -33,18 +33,20 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>()((set, get) => ({
   user: null,
   loading: false,
-  isCheckingAuth: true,
+  checkingAuth: true,
 
   checkAuth: async () => {
-    try {
-      const res = await apiClient.get(UserApi.UserInfo)
-      set({
-        user: res.data,
-        isCheckingAuth: false,
-      })
-    } catch (error) {
-      set({ isCheckingAuth: false })
-      handleError(error)
+    if (get().checkingAuth) {
+      try {
+        const res = await apiClient.get(UserApi.UserInfo)
+        set({
+          user: res.data,
+          checkingAuth: false,
+        })
+      } catch (error) {
+        set({ checkingAuth: false })
+        handleError(error)
+      }
     }
   },
 

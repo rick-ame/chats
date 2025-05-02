@@ -3,7 +3,7 @@ import { Lock, Mail } from 'lucide-react'
 import { motion } from 'motion/react'
 import { FC } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 
 import { MButton } from '@/components/m-button'
 import { MInput } from '@/components/m-input'

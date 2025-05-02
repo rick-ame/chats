@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { redirect } from 'react-router-dom'
+import { redirect } from 'react-router'
 import { toast } from 'sonner'
 
 import { prefix } from '~'
