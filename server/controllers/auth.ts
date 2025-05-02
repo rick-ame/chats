@@ -133,7 +133,7 @@ export const logout: RequestHandler<unknown, { message: string }> = async (
 
 export const resetPassword: RequestHandler<
   unknown,
-  { message: string },
+  ResError,
   z.infer<typeof resetPasswordSchema>,
   unknown,
   Locals
@@ -150,7 +150,10 @@ export const resetPassword: RequestHandler<
 
     const pwdMatch = await verify(found.password, oldPassword)
     if (!pwdMatch) {
-      res.status(400).json({ message: 'Password is incorrect' })
+      res.status(400).json({
+        code: ClientErrorCode.OldPasswordIncorrect,
+        message: 'Password is incorrect',
+      })
       return
     }
 

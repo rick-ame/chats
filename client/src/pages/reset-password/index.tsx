@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
 import { ResetPasswordForm, useAuthStore } from '@/store'
-import { resetPasswordSchema } from '~'
+import { ClientErrorCode, ResError, resetPasswordSchema } from '~'
 
 const ResetPassword: FC = () => {
   const { loading, resetPassword } = useAuthStore()
@@ -42,7 +42,13 @@ const ResetPassword: FC = () => {
         navigate('/')
       }, 1000)
     } catch (error) {
-      handleError(error)
+      const errorRes = handleError<ResError>(error)
+      if (errorRes?.data.code === ClientErrorCode.OldPasswordIncorrect) {
+        form.setError('oldPassword', {
+          type: 'custom',
+          message: errorRes.data.message,
+        })
+      }
     }
   }
 

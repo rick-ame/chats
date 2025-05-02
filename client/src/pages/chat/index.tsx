@@ -1,16 +1,18 @@
 import { LogOut, Plus, Search, ShieldCheck, SquarePen } from 'lucide-react'
 import { motion } from 'motion/react'
 import { FC } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { toast } from 'sonner'
 
-import { MInput } from '@/components/m-ui'
+import { MButton, MInput } from '@/components/m-ui'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/store'
 
 import { ChatAvatar } from './chat-avatar'
 
 const Chat: FC = () => {
-  const { user } = useAuthStore()
+  const navigate = useNavigate()
+  const { user, logout } = useAuthStore()
   const { firstName, lastName } = user!
 
   return (
@@ -45,25 +47,35 @@ const Chat: FC = () => {
                   </Link>
                 </div>
               </header>
-              <div className="flex items-center justify-between gap-4 p-4">
+              <div className="flex items-center justify-between gap-4 px-4 py-6">
                 <div className="grow-1">
                   <MInput
                     icon={Search}
-                    className="rounded-xl"
+                    className="rounded-3xl"
                     placeholder="Search"
                   />
                 </div>
-                <Button size="icon">
+                <Button size="icon" className="rounded-full">
                   <Plus className="size-6" />
+                  <span className="sr-only">Add Contact</span>
                 </Button>
               </div>
             </section>
             <section className="grow-1">contacts</section>
             <footer className="px-4">
-              <Button variant="destructive" className="w-full">
+              <MButton
+                className="bg-destructive hover:bg-destructive w-full text-white"
+                onClick={async () => {
+                  await logout()
+                  toast.info('Logout Successfully')
+                  setTimeout(() => {
+                    navigate('/login')
+                  }, 1000)
+                }}
+              >
                 <LogOut className="size-5" />
                 <span className="sr-only">Logout</span>
-              </Button>
+              </MButton>
             </footer>
           </div>
           <div className="hidden sm:flex">Mid</div>
