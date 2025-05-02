@@ -7,7 +7,7 @@ export const Container: FC<PropsWithChildren> = ({ children }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="dark:bg-background/60 w-full max-w-md rounded-2xl bg-gray-100 shadow-2xl backdrop-blur-xl backdrop-filter"
+      className="w-full max-w-md rounded-2xl bg-gray-100/30 shadow-2xl backdrop-blur-xl backdrop-filter dark:bg-gray-900/30"
     >
       {children}
     </motion.main>

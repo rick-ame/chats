@@ -19,7 +19,13 @@ export const MInput: FC<
       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
         <Icon className="text-primary size-5" />
       </div>
-      <MotionInput className={cn('pe-3 ps-10', className)} {...props} />
+      <MotionInput
+        className={cn(
+          'bg-gray-100/50 pe-3 ps-10 dark:bg-gray-500/30',
+          className,
+        )}
+        {...props}
+      />
     </div>
   )
 }
