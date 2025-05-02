@@ -67,7 +67,7 @@ export const ProfileAvatar: FC<Props> = ({ name, image, setImage }) => {
         <Button
           size="icon"
           variant="destructive"
-          className="absolute -right-1.5 top-0 size-7 rounded-full"
+          className="absolute -end-1.5 top-0 size-7 rounded-full"
           type="button"
           onClick={() => {
             setImage('')

@@ -19,9 +19,9 @@ const PasswordCriteria: FC<Props> = ({ password }) => {
       {criteria.map((item) => (
         <div key={item.label} className="flex items-center text-xs">
           {item.met ? (
-            <Check className="text-primary mr-2 size-4" />
+            <Check className="text-primary me-2 size-4" />
           ) : (
-            <X className="mr-2 size-4 text-gray-500" />
+            <X className="me-2 size-4 text-gray-500" />
           )}
           <span className={item.met ? 'text-primary' : 'text-gray-500'}>
             {item.label}

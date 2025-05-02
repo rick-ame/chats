@@ -6,9 +6,8 @@ import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
 import victory from '@/assets/victory.svg'
-import { MButton } from '@/components/m-button'
-import { MInput } from '@/components/m-input'
-import { Main } from '@/components/main'
+import { Container, Title } from '@/components/container'
+import { MButton, MInput } from '@/components/m-ui'
 import {
   Form,
   FormControl,
@@ -53,12 +52,10 @@ const Login: FC = () => {
   }
 
   return (
-    <Main>
+    <Container>
       <div className="p-8">
         <header className="mb-6 flex items-center justify-center">
-          <h2 className="from-primary via-primary/80 to-primary mx-2 bg-gradient-to-br bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl">
-            Welcome Back
-          </h2>
+          <Title>Welcome Back</Title>
           <img src={victory} alt="Victory Emoji" className="size-[60px]" />
         </header>
         <Form {...form}>
@@ -126,7 +123,7 @@ const Login: FC = () => {
           </Link>
         </p>
       </footer>
-    </Main>
+    </Container>
   )
 }
 export default Login

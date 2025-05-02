@@ -4,9 +4,8 @@ import { FC } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 
-import { MButton } from '@/components/m-button'
-import { MInput } from '@/components/m-input'
-import { Main } from '@/components/main'
+import { Container, Title } from '@/components/container'
+import { MButton, MInput } from '@/components/m-ui'
 import { PasswordStrengthMeter } from '@/components/password-strength-meter'
 import {
   Form,
@@ -52,11 +51,11 @@ const Signup: FC = () => {
   }
 
   return (
-    <Main>
+    <Container>
       <div className="p-8">
-        <h2 className="from-primary via-primary/80 to-primary mb-6 bg-gradient-to-br bg-clip-text text-center text-3xl font-bold text-transparent">
-          Create Account
-        </h2>
+        <header className="mb-6">
+          <Title>Create Account</Title>
+        </header>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSignup)} className="space-y-4">
             <FormField
@@ -132,7 +131,7 @@ const Signup: FC = () => {
           </Link>
         </p>
       </footer>
-    </Main>
+    </Container>
   )
 }
 

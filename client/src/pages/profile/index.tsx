@@ -6,9 +6,8 @@ import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
-import { MButton } from '@/components/m-button'
-import { MInput } from '@/components/m-input'
-import { Main } from '@/components/main'
+import { Container, Title } from '@/components/container'
+import { MButton, MInput } from '@/components/m-ui'
 import { useThemeColor } from '@/components/providers'
 import {
   Form,
@@ -84,16 +83,19 @@ const Profile: FC = () => {
   }, [setColor, userColor])
 
   return (
-    <Main>
+    <Container>
       <div className="p-8">
-        <h2 className="text-primary/90 relative mb-6 bg-clip-text text-center text-2xl font-bold sm:text-3xl">
+        <header className="relative mb-6">
+          <Title>Profile Information</Title>
           {profileSetup && (
-            <Link to="/" className="absolute -left-2 top-1/2 -translate-y-1/2">
+            <Link
+              to="/"
+              className="text-primary/90 absolute -start-2 top-1/2 -translate-y-1/2"
+            >
               <ArrowLeft className="size-8" />
             </Link>
           )}
-          Profile Information
-        </h2>
+        </header>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -199,7 +201,7 @@ const Profile: FC = () => {
           </form>
         </Form>
       </div>
-    </Main>
+    </Container>
   )
 }
 

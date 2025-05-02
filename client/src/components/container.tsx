@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import { FC, PropsWithChildren } from 'react'
 
-export const Main: FC<PropsWithChildren> = ({ children }) => {
+export const Container: FC<PropsWithChildren> = ({ children }) => {
   return (
     <motion.main
       initial={{ opacity: 0, y: 20 }}
@@ -11,5 +11,13 @@ export const Main: FC<PropsWithChildren> = ({ children }) => {
     >
       {children}
     </motion.main>
+  )
+}
+
+export const Title: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <h2 className="from-primary via-primary/80 to-primary bg-gradient-to-br bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl">
+      {children}
+    </h2>
   )
 }
