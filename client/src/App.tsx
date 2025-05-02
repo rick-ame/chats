@@ -2,7 +2,8 @@ import { FC, lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 
 import { Authed, Private, Setup } from './components/auth'
-import { Loading } from './components/loading'
+import { Background } from './components/background'
+import { Loading, LoadingSkeleton } from './components/loading'
 import { Providers } from './components/providers'
 import { ThemeToggle } from './components/theme-toggle'
 import { Toaster } from './components/ui/sonner'
@@ -30,36 +31,38 @@ const App: FC = () => {
       {checkingAuth ? (
         <Loading />
       ) : (
-        <Suspense fallback={<Loading />}>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/login"
-                element={
-                  <Authed>
-                    <Login />
-                  </Authed>
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  <Authed>
-                    <Signup />
-                  </Authed>
-                }
-              />
-              <Route path="/" element={<Private />}>
-                <Route path="profile" element={<Profile />} />
-                <Route path="" element={<Setup />}>
-                  <Route path="" element={<Chat />} />
-                  <Route path="reset-password" element={<ResetPassword />} />
+        <Background>
+          <Suspense fallback={<LoadingSkeleton />}>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/login"
+                  element={
+                    <Authed>
+                      <Login />
+                    </Authed>
+                  }
+                />
+                <Route
+                  path="/signup"
+                  element={
+                    <Authed>
+                      <Signup />
+                    </Authed>
+                  }
+                />
+                <Route path="/" element={<Private />}>
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="" element={<Setup />}>
+                    <Route path="" element={<Chat />} />
+                    <Route path="reset-password" element={<ResetPassword />} />
+                  </Route>
                 </Route>
-              </Route>
-              <Route path="*" element={<Navigate to="/login" />} />
-            </Routes>
-          </BrowserRouter>
-        </Suspense>
+                <Route path="*" element={<Navigate to="/login" />} />
+              </Routes>
+            </BrowserRouter>
+          </Suspense>
+        </Background>
       )}
     </Providers>
   )
