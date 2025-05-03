@@ -115,6 +115,6 @@
 
 @layer base {
   body {
-    @apply bg-white dark:bg-black;
+    @apply min-w-[360px] bg-white dark:bg-black;
   }
 }

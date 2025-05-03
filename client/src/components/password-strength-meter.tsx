@@ -1,6 +1,8 @@
 import { Check, X } from 'lucide-react'
 import { FC } from 'react'
 
+import { cn } from '@/lib/utils'
+
 interface Props {
   password: string
 }
@@ -67,12 +69,14 @@ export const PasswordStrengthMeter: FC<Props> = ({ password }) => {
           {getStrengthText(strength)}
         </span>
       </div>
-
       <div className="flex space-x-1">
-        {[...Array(4)].map((_, index) => (
+        {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className={`h-1 w-1/4 rounded-full transition-colors duration-300 ${index < strength ? getColor(strength) : 'bg-gray-600'} `}
+            className={cn(
+              'h-1 w-1/4 rounded-full transition-colors duration-300',
+              index < strength ? getColor(strength) : 'bg-gray-600',
+            )}
           />
         ))}
       </div>

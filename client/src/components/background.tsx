@@ -1,6 +1,8 @@
 import { motion } from 'motion/react'
 import { FC, PropsWithChildren } from 'react'
 
+import { cn } from '@/lib/utils'
+
 const FloatingShape: FC<{
   color: string
   size: string
@@ -9,7 +11,12 @@ const FloatingShape: FC<{
 }> = ({ color, size, position, delay }) => {
   return (
     <motion.div
-      className={`absolute rounded-full ${color} ${size} ${position} opacity-20 blur-xl`}
+      className={cn(
+        'absolute rounded-full opacity-20 blur-xl',
+        color,
+        size,
+        position,
+      )}
       animate={{
         y: ['0%', '100%', '0%'],
         x: ['0%', '100%', '0%'],
@@ -28,7 +35,7 @@ const FloatingShape: FC<{
 
 export const Background: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="via-primary/40 to-primary/25 from-primary/20 relative flex min-h-dvh min-w-[360px] items-center justify-center overflow-hidden bg-gradient-to-br p-4">
+    <div className="via-primary/40 to-primary/25 from-primary/20 relative flex min-h-dvh items-center justify-center overflow-hidden bg-gradient-to-br p-4">
       <FloatingShape
         color="bg-primary/50 dark:bg-primary/30"
         size="size-64"
