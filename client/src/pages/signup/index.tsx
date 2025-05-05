@@ -101,7 +101,7 @@ const Signup: FC = () => {
                     <MInput
                       icon={Lock}
                       type="password"
-                      placeholder="Confirm Password"
+                      placeholder="Retype Password"
                       {...field}
                     />
                   </FormControl>

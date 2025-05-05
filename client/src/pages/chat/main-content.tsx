@@ -1,5 +1,5 @@
 import { LogOut, Plus, Search, ShieldCheck, SquarePen } from 'lucide-react'
-import { FC, useState } from 'react'
+import { FC, lazy, Suspense, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
@@ -17,7 +17,9 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useAuthStore, useContactStore } from '@/store'
 
-import { ChatAvatar, LottieAnimation } from './components'
+import { ChatAvatar } from './components'
+
+const LottieAnimation = lazy(() => import('./lottie-animation'))
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
@@ -122,7 +124,9 @@ export const MainContent: FC = () => {
                       ))}
                     </ScrollArea>
                   </div>
-                  <LottieAnimation />
+                  <Suspense fallback={null}>
+                    <LottieAnimation />
+                  </Suspense>
                 </div>
               </div>
             </DialogContent>

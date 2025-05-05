@@ -126,4 +126,5 @@ const Login: FC = () => {
     </Container>
   )
 }
+
 export default Login

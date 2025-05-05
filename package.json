@@ -12,12 +12,12 @@
   "license": "MIT",
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
-    "zod": "^3.24.3"
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "@types/node": "^22.15.3",
     "eslint": "^9.26.0",
-    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react-hooks": "^5.2.0",

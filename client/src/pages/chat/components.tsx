@@ -1,7 +1,5 @@
-import { useLottie } from 'lottie-react'
 import { FC } from 'react'
 
-import lottieData from '@/assets/lottie.json'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface Props {
@@ -18,12 +16,4 @@ export const ChatAvatar: FC<Props> = ({ className, avatar, name }) => {
       </AvatarFallback>
     </Avatar>
   )
-}
-
-export const LottieAnimation: FC = () => {
-  const { View } = useLottie({
-    animationData: lottieData,
-  })
-
-  return <div className="p-12 opacity-15">{View}</div>
 }

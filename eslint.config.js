@@ -50,9 +50,6 @@ export default tseslint.config(
         typescript: {
           project: 'client/tsconfig.app.json',
         },
-        // alias: {
-        //   map: [['', './client/public']],
-        // },
       },
     },
   },

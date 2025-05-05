@@ -109,7 +109,7 @@ const ResetPassword: FC = () => {
                     <MInput
                       icon={Lock}
                       type="password"
-                      placeholder="Confirm Password"
+                      placeholder="Retype New Password"
                       {...field}
                     />
                   </FormControl>
