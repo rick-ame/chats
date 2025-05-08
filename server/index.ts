@@ -9,7 +9,9 @@ import { prefix } from '~'
 
 import { checkEnv, connectDB, logger, PORT } from './lib'
 import { routes as authRoutes } from './routes/auth'
+import { routes as contactRoutes } from './routes/contact'
 import { routes as userRoutes } from './routes/user'
+import { setupSocket } from './socket'
 
 try {
   checkEnv()
@@ -32,6 +34,7 @@ app.use(
 
 app.use(prefix, authRoutes)
 app.use(prefix, userRoutes)
+app.use(prefix, contactRoutes)
 
 app.get('/*splat', (req, res) => {
   res.sendFile(path.join(staticFiles, 'index.html'))
@@ -41,7 +44,10 @@ async function main() {
   await connectDB()
   logger.info('successfully connected to MongoDB!')
 
-  await app.listen(PORT)
+  const server = await app.listen(PORT)
+
+  setupSocket(server)
+
   logger.info(`server is running at: ${PORT}!`)
 }
 main().catch((error) => {

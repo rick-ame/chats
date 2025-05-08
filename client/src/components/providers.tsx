@@ -40,11 +40,7 @@ const ColorProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [user?.color, setColor])
 
-  return (
-    <ColorContext.Provider value={{ color, setColor }}>
-      {children}
-    </ColorContext.Provider>
-  )
+  return <ColorContext value={{ color, setColor }}>{children}</ColorContext>
 }
 export const useThemeColor = () => use(ColorContext)
 

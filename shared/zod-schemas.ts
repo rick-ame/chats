@@ -20,7 +20,7 @@ export const signupSchema = loginSchema
   })
 
 export const updateProfileScheme = z.object({
-  email: z.string().email('Please input valid email'),
+  email: z.string().email('Please input valid email').optional(),
   firstName: z.string().trim().nonempty('First name is required'),
   lastName: z.string().trim().nonempty('Last name is required'),
 })
@@ -45,3 +45,7 @@ export const resetPasswordSchema = z
     path: ['confirm'],
     message: 'Please input same password',
   })
+
+export const searchContactsSchema = z.object({
+  searchTerm: z.string().trim().nonempty('Search term is required'),
+})

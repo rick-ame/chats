@@ -22,3 +22,14 @@ export type User = {
   color?: Color
   profileSetup: boolean
 }
+
+const messageTypes = ['text', 'file'] as const
+export const MessageType = z.enum(messageTypes)
+
+export type Message = {
+  sender: string
+  recipient?: string
+  messageType: z.infer<typeof MessageType>
+  content?: string
+  fileUrl?: string
+}

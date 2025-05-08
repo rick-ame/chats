@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose'
 
-import { User } from '~'
+import { Color, User } from '~'
 
 const userSchema = new Schema<User>(
   {
@@ -26,6 +26,7 @@ const userSchema = new Schema<User>(
     },
     color: {
       type: String,
+      enum: Color.options,
       required: false,
     },
     profileSetup: {
@@ -36,4 +37,4 @@ const userSchema = new Schema<User>(
   { timestamps: true },
 )
 
-export const UserModel = model<User>('Users', userSchema)
+export const UserModel = model<User>('users', userSchema)

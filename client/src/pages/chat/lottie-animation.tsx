@@ -8,7 +8,7 @@ const LottieAnimation: FC = () => {
     animationData: lottieData,
   })
 
-  return <div className="p-12 opacity-15">{View}</div>
+  return <div className="-mt-8 p-14 opacity-15">{View}</div>
 }
 
 export default LottieAnimation
