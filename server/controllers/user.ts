@@ -16,7 +16,7 @@ export const getUserInfo: RequestHandler<
   try {
     const userId = res.locals.userId
 
-    const user = await UserModel.findById(userId)
+    const user = await UserModel.findById(userId).select('-password')
     if (!user) {
       res.status(404).json({ message: 'User not found' })
       return

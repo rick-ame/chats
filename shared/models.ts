@@ -28,7 +28,7 @@ export const MessageType = z.enum(messageTypes)
 
 export type Message = {
   sender: string
-  recipient?: string
+  recipient: string
   messageType: z.infer<typeof MessageType>
   content?: string
   fileUrl?: string

@@ -6,7 +6,8 @@ const userSchema = new Schema<User>(
   {
     email: {
       type: String,
-      required: [true, 'Email is Required'],
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -36,5 +37,12 @@ const userSchema = new Schema<User>(
   },
   { timestamps: true },
 )
+
+userSchema.pre('findOneAndUpdate', function (next) {
+  this.set({
+    updatedAt: Date.now(),
+  })
+  next()
+})
 
 export const UserModel = model<User>('users', userSchema)

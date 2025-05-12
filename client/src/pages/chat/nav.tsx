@@ -26,25 +26,25 @@ import { cn } from '@/lib/utils'
 import { useAuthStore, useContactStore } from '@/store'
 import { ResUser } from '~'
 
-import { ChatAvatar } from './components'
+import { ChatAvatar } from './chat-avatar'
 
 const LottieAnimation = lazy(() => import('./lottie-animation'))
 
-export const MainContent: FC = () => {
+export const Nav: FC = () => {
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
-  const { email, avatar, firstName, lastName } = user!
+  const { avatar, firstName, lastName } = user!
 
-  const { contacts, currentChattingWith, searchContact, searching, chatTo } =
+  const { contacts, currentChattingWith, searchContacts, searching, chatTo } =
     useContactStore()
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchContacts, setSearchContacts] = useState<ResUser[]>()
+  const [searchedContacts, setSearchedContacts] = useState<ResUser[]>()
   const [open, setOpen] = useState(false)
 
   const onSearchContact = async () => {
     if (searchQuery && !searching) {
-      const data = await searchContact(searchQuery)
-      setSearchContacts(data)
+      const data = await searchContacts(searchQuery)
+      setSearchedContacts(data)
     }
   }
 
@@ -53,11 +53,7 @@ export const MainContent: FC = () => {
       <header>
         <div className="text-primary mb-4 flex items-center justify-between">
           <div className="flex items-center">
-            <ChatAvatar
-              className="size-10"
-              avatar={avatar}
-              name={firstName || email}
-            />
+            <ChatAvatar avatar={avatar} name={firstName!} />
             <h3
               className="w-80px ms-3 truncate text-xl font-semibold"
               title={`${firstName} ${lastName}`}
@@ -76,7 +72,7 @@ export const MainContent: FC = () => {
             </Link>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-2">
           <div className="grow-1">
             <MInput
               icon={Search}
@@ -121,11 +117,11 @@ export const MainContent: FC = () => {
                   </MButton>
                 </div>
                 <div>
-                  {searchContacts ? (
+                  {searchedContacts ? (
                     <div className="py-4">
-                      {searchContacts.length ? (
+                      {searchedContacts.length ? (
                         <ScrollArea className="h-72 rounded-md bg-gray-100/60 p-4 dark:bg-gray-700/50">
-                          {searchContacts.map((c) => (
+                          {searchedContacts.map((c) => (
                             <div key={c.id}>
                               <div
                                 key={c.id}
@@ -198,7 +194,9 @@ export const MainContent: FC = () => {
                     chatTo(c)
                   }}
                 >
-                  <ChatAvatar name={c.firstName!} avatar={c.avatar} />
+                  <div className={'avatar-' + c.color}>
+                    <ChatAvatar name={c.firstName!} avatar={c.avatar} />
+                  </div>
                   <div className="text-start">
                     <p>
                       {c.firstName} {c.lastName}

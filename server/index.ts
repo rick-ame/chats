@@ -1,5 +1,6 @@
 import 'dotenv/config'
 
+import { createServer } from 'node:http'
 import path from 'node:path'
 
 import cookieParser from 'cookie-parser'
@@ -21,6 +22,7 @@ try {
 }
 
 const app = express()
+const server = createServer(app)
 
 const staticFiles = path.resolve(import.meta.dirname, '../public')
 app.use(express.static(staticFiles))
@@ -36,6 +38,8 @@ app.use(prefix, authRoutes)
 app.use(prefix, userRoutes)
 app.use(prefix, contactRoutes)
 
+setupSocket(server)
+
 app.get('/*splat', (req, res) => {
   res.sendFile(path.join(staticFiles, 'index.html'))
 })
@@ -44,10 +48,7 @@ async function main() {
   await connectDB()
   logger.info('successfully connected to MongoDB!')
 
-  const server = await app.listen(PORT)
-
-  setupSocket(server)
-
+  await server.listen(PORT)
   logger.info(`server is running at: ${PORT}!`)
 }
 main().catch((error) => {

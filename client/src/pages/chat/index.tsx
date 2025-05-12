@@ -1,9 +1,9 @@
 import { motion } from 'motion/react'
 import { FC } from 'react'
 
-import { ChatContent } from './chat-content'
 import { Detail } from './detail'
-import { MainContent } from './main-content'
+import { Dialogue } from './dialogue'
+import { Nav } from './nav'
 
 const Chat: FC = () => {
   return (
@@ -16,12 +16,12 @@ const Chat: FC = () => {
       >
         <div className="grid h-full sm:grid-cols-[3fr_4fr] md:grid-cols-[4fr_5fr_3fr] lg:grid-cols-[2fr_4fr_2fr]">
           <section className="h-full border-e-gray-100 px-4 py-6 sm:border-e dark:border-e-gray-100/50">
-            <MainContent />
+            <Nav />
           </section>
-          <section className="hidden px-4 py-6 sm:flex">
-            <ChatContent />
+          <section className="hidden py-6 sm:flex">
+            <Dialogue />
           </section>
-          <aside className="hidden justify-center border-s border-s-gray-100 px-4 py-6 md:flex dark:border-s-gray-100/50">
+          <aside className="hidden justify-center border-s border-s-gray-100 py-6 md:flex dark:border-s-gray-100/50">
             <Detail />
           </aside>
         </div>

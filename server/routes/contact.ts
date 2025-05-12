@@ -1,11 +1,13 @@
 import { Router } from 'express'
 import { z } from 'zod'
 
-import { searchContacts } from '@/controllers/contact'
+import { getContacts, getMessages, searchContacts } from '@/controllers/contact'
 import { validate, verifyToken } from '@/middlewares'
 import { ContactApi, searchContactsSchema } from '~'
 
 export const routes = Router()
+
+routes.get(ContactApi.Contacts, verifyToken, getContacts)
 
 routes.get(
   ContactApi.Search,
@@ -17,3 +19,5 @@ routes.get(
   ),
   searchContacts,
 )
+
+routes.get(`${ContactApi.Messages}/:id`, verifyToken, getMessages)

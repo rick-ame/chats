@@ -1,8 +1,8 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router'
 import { toast } from 'sonner'
 
-import { useAuthStore } from '@/store'
+import { useAuthStore, useContactStore } from '@/store'
 
 export const Authed: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useAuthStore()
@@ -22,6 +22,14 @@ export const Private: FC = () => {
 
 export const Setup: FC = () => {
   const { user } = useAuthStore()
+  const { init, cleanup } = useContactStore()
+
+  useEffect(() => {
+    if (user?.profileSetup) {
+      init(user.id)
+    }
+    return () => cleanup()
+  }, [user, init, cleanup])
 
   if (!user?.profileSetup) {
     toast.warning('Please setup profile to continue')

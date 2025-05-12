@@ -1,4 +1,4 @@
-import { User } from './models'
+import { Message, User } from './models'
 
 export const enum ClientErrorCode {
   EmailRegistered = 4001,
@@ -11,3 +11,9 @@ export interface ResError {
 }
 
 export type ResUser = Omit<User, 'password'> & { id: string }
+
+export type ResMessage = Omit<Message, 'sender' | 'recipient'> & {
+  id: string
+  sender: Omit<ResUser, 'profileSetup'>
+  recipientId: string
+}

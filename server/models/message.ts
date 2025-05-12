@@ -5,7 +5,7 @@ import { Message, MessageType } from '~'
 const messageSchema = new Schema<
   Omit<Message, 'sender' | 'recipient'> & {
     sender: Schema.Types.ObjectId
-    recipient?: Schema.Types.ObjectId
+    recipient: Schema.Types.ObjectId
   }
 >(
   {
@@ -17,7 +17,7 @@ const messageSchema = new Schema<
     recipient: {
       type: Schema.Types.ObjectId,
       ref: 'users',
-      required: false,
+      required: true,
     },
     messageType: {
       type: String,

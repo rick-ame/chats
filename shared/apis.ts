@@ -15,4 +15,5 @@ const contactApiBase = '/contacts'
 export const enum ContactApi {
   Contacts = `${contactApiBase}`,
   Search = `${contactApiBase}/search`,
+  Messages = `${contactApiBase}/messages`,
 }

@@ -1,31 +1,92 @@
+import { io, Socket } from 'socket.io-client'
 import { create } from 'zustand'
 
 import { apiClient, handleError } from '@/lib/api-client'
-import { ContactApi, ResUser } from '~'
+import { ContactApi, Message, ResMessage, ResUser, SocketEvent } from '~'
 
 interface ContactStore {
+  setup: boolean
   loading: boolean
   searching: boolean
+  _socket: Socket | null
   contacts: ResUser[] | null
   currentChattingWith: ResUser | null
-  fetchDMs: () => Promise<void>
-  searchContact: (query: string) => Promise<ResUser[] | undefined>
+  messagesMap: Map<string, ResMessage[]>
+  messages: ResMessage[] | null
+  init: (userId: string) => Promise<void>
+  cleanup: () => void
+  send: (message: Message) => void
+  searchContacts: (query: string) => Promise<ResUser[] | undefined>
   chatTo: (user: ResUser) => void
 }
 export const useContactStore = create<ContactStore>()((set, get) => ({
+  setup: true,
   loading: false,
   searching: false,
+
+  _socket: null,
 
   contacts: null,
   currentChattingWith: null,
 
-  fetchDMs: async () => {
+  messagesMap: new Map(),
+  messages: null,
+
+  init: async (userId) => {
+    if (get().setup) {
+      try {
+        const socket = io({
+          query: {
+            userId,
+          },
+        })
+        const res = await apiClient.get(ContactApi.Contacts)
+        set({
+          _socket: socket,
+          contacts: res.data,
+          setup: false,
+        })
+
+        socket.on(SocketEvent.ReceiveMessage, (messageData: ResMessage) => {
+          const id =
+            messageData.sender.id === userId
+              ? messageData.recipientId
+              : messageData.sender.id
+          const messagesMap = get().messagesMap
+          const messages = [...(messagesMap.get(id) || []), messageData]
+          messagesMap.set(id, messages)
+          if (get().currentChattingWith?.id === id) {
+            set({
+              messages,
+              messagesMap,
+            })
+          } else {
+            set({
+              messagesMap,
+            })
+          }
+        })
+      } catch (error) {
+        set({
+          setup: false,
+        })
+        handleError(error)
+      }
+    }
+  },
+
+  cleanup: () => {
+    get()._socket?.disconnect()
     set({
-      contacts: [],
+      _socket: null,
     })
   },
 
-  searchContact: async (query) => {
+  send: (message) => {
+    get()._socket?.emit(SocketEvent.SendMessage, message)
+  },
+
+  searchContacts: async (query) => {
     set({
       searching: true,
     })
@@ -45,12 +106,29 @@ export const useContactStore = create<ContactStore>()((set, get) => ({
 
   chatTo: async (user) => {
     let contacts = get().contacts || []
-    if (!contacts?.includes(user)) {
+    if (!contacts?.find((c) => c.id === user.id)) {
       contacts = [user].concat(contacts)
     }
-    set({
-      currentChattingWith: user,
-      contacts,
-    })
+    const messagesMap = get().messagesMap
+    if (!messagesMap.get(user.id)) {
+      try {
+        const res = await apiClient.get(`${ContactApi.Messages}/${user.id}`)
+        messagesMap.set(user.id, res.data)
+        set({
+          currentChattingWith: user,
+          contacts,
+          messagesMap,
+          messages: messagesMap.get(user.id),
+        })
+      } catch (error) {
+        handleError(error)
+      }
+    } else {
+      set({
+        currentChattingWith: user,
+        contacts,
+        messages: messagesMap.get(user.id),
+      })
+    }
   },
 }))
