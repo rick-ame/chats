@@ -20,7 +20,7 @@ Highlights:
 ### Backend (`/server`)
 
 ```
-PORT=3000
+PORT=8000
 DATABASE_URI=your_mongodb_uri
 JWT_KEY=your_jwt_key
 ```
@@ -50,7 +50,7 @@ pnpm dev:client
 ### Serve Locally
 
 ```sh
-pnpm start # Project runs on `http://localhost:3000/`
+pnpm start # Project runs on `http://localhost:8000/`
 ```
 
 ### Build (Both for Backend and Frontend)

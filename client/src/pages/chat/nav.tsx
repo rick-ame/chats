@@ -38,7 +38,8 @@ export const Nav: FC = () => {
   const { contacts, currentChattingWith, searchContacts, searching, chatTo } =
     useContactStore()
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchedContacts, setSearchedContacts] = useState<ResUser[]>()
+  const [searchedContacts, setSearchedContacts] =
+    useState<Omit<ResUser, 'profileSetup'>[]>()
   const [open, setOpen] = useState(false)
 
   const onSearchContact = async () => {
