@@ -9,15 +9,18 @@ interface ContactStore {
   loading: boolean
   searching: boolean
   _socket: Socket | null
-  contacts: ResUser[] | null
-  currentChattingWith: ResUser | null
+  contacts: Omit<ResUser, 'profileSetup'>[] | null
+  currentChattingWith: Omit<ResUser, 'profileSetup'> | null
   messagesMap: Map<string, ResMessage[]>
   messages: ResMessage[] | null
   init: (userId: string) => Promise<void>
   cleanup: () => void
   send: (message: Message) => void
-  searchContacts: (query: string) => Promise<ResUser[] | undefined>
-  chatTo: (user: ResUser) => void
+  searchContacts: (
+    query: string,
+  ) => Promise<Omit<ResUser, 'profileSetup'>[] | undefined>
+  chatTo: (user: Omit<ResUser, 'profileSetup'>) => void
+  close: () => void
 }
 export const useContactStore = create<ContactStore>()((set, get) => ({
   setup: true,
@@ -64,6 +67,14 @@ export const useContactStore = create<ContactStore>()((set, get) => ({
             set({
               messagesMap,
             })
+            if (
+              messageData.recipientId === userId &&
+              !get().contacts?.find((c) => c.id === messageData.sender.id)
+            ) {
+              set({
+                contacts: [messageData.sender, ...(get().contacts || [])],
+              })
+            }
           }
         })
       } catch (error) {
@@ -130,5 +141,12 @@ export const useContactStore = create<ContactStore>()((set, get) => ({
         messages: messagesMap.get(user.id),
       })
     }
+  },
+
+  close: () => {
+    set({
+      currentChattingWith: null,
+      messages: null,
+    })
   },
 }))

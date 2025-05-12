@@ -1,4 +1,4 @@
-import { Send } from 'lucide-react'
+import { MessageSquareText, Send, X } from 'lucide-react'
 import { FC, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -12,22 +12,28 @@ import { ChatAvatar } from './chat-avatar'
 
 export const Dialogue: FC = () => {
   const { user } = useAuthStore()
-  const { currentChattingWith, messages, send } = useContactStore()
+  const { currentChattingWith, messages, send, close } = useContactStore()
 
   const { id: userId } = user!
 
   const [message, setMessage] = useState('')
 
   return currentChattingWith ? (
-    <div className="flex w-full flex-col">
+    <div className="inset-0 flex w-full flex-col py-6 backdrop-blur-3xl max-sm:absolute max-sm:bg-gray-100/85">
       <header className="flex items-center border-b border-b-gray-100 px-4 pb-4 dark:border-b-gray-100/50">
-        <ChatAvatar
-          avatar={currentChattingWith.avatar}
-          name={currentChattingWith.firstName!}
-        />
-        <h3 className="w-80px ms-3 truncate text-xl font-semibold">
+        <div className={'avatar-' + currentChattingWith.color}>
+          <ChatAvatar
+            avatar={currentChattingWith.avatar}
+            name={currentChattingWith.firstName!}
+          />
+        </div>
+        <h3 className="w-80px grow-1 ms-3 truncate text-xl font-semibold">
           {currentChattingWith.firstName} {currentChattingWith.lastName}
         </h3>
+        <Button variant="ghost" onClick={close}>
+          <X className="size-6" />
+          <span className="sr-only">Close</span>
+        </Button>
       </header>
       <div className="grow-1">
         <ScrollArea className="p-4">
@@ -86,6 +92,8 @@ export const Dialogue: FC = () => {
       </footer>
     </div>
   ) : (
-    <div></div>
+    <div className="hidden w-full items-center justify-center sm:flex">
+      <MessageSquareText className="text-primary size-25" />
+    </div>
   )
 }
