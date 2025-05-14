@@ -1,6 +1,6 @@
 # Step: build frontend
 FROM node:22-alpine AS builder-fe
-RUN npm i -g pnpm@10.11
+RUN corepack enable
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN pnpm build:client
 
 # Step: build backend
 FROM node:22-alpine AS builder-be
-RUN npm i -g pnpm@10.11
+RUN corepack enable
 
 WORKDIR /app
 
@@ -26,7 +26,7 @@ RUN pnpm build:server
 
 # Step: prod
 FROM node:22-alpine
-RUN npm i -g pnpm@10.11
+RUN corepack enable
 
 WORKDIR /app
 

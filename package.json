@@ -1,8 +1,10 @@
 {
   "name": "chats",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
-  "version": "0.1.0",
+  "license": "MIT",
+  "packageManager": "pnpm@10.11.0",
   "scripts": {
     "clean": "rimraf server/dist",
     "dev:client": "pnpm --filter client dev",
@@ -13,7 +15,6 @@
     "lint": "eslint .",
     "start": "node dist/server.js"
   },
-  "license": "MIT",
   "dependencies": {
     "argon2": "^0.43.0",
     "cookie-parser": "^1.4.7",
