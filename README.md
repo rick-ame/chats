@@ -17,7 +17,7 @@ Highlights:
 
 ## 🧪 .env Setup
 
-### Backend (`/server`)
+### Backend
 
 ```
 PORT=8000
@@ -47,14 +47,14 @@ pnpm dev:client
 
 ## 🌍 Deploy
 
+### Build (Both for Backend and Frontend)
+
+```sh
+pnpm build # Output folder at `dist`, frontend resources at `dist/public`
+```
+
 ### Serve Locally
 
 ```sh
 pnpm start # Project runs on `http://localhost:8000/`
-```
-
-### Build (Both for Backend and Frontend)
-
-```sh
-pnpm build # Output folder at `/server/dist`
 ```
