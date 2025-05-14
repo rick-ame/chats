@@ -1,4 +1,4 @@
-import { Message, User } from './models'
+import { type Message, User } from './models'
 
 export const enum ClientErrorCode {
   EmailRegistered = 4001,

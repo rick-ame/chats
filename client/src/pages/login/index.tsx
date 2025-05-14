@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock, Mail } from 'lucide-react'
-import { FC } from 'react'
+import { type FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
@@ -16,8 +16,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
-import { LoginForm, useAuthStore } from '@/store'
-import { loginSchema, ResError } from '~'
+import { type LoginForm, useAuthStore } from '@/store'
+import { loginSchema, type ResError } from '~'
 
 const Login: FC = () => {
   const { loading, login } = useAuthStore()

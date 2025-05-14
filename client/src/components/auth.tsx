@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect } from 'react'
+import { type FC, type PropsWithChildren, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router'
 import { toast } from 'sonner'
 

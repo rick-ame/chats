@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_KEY } from '@/lib'
+import { JWT_SECRET } from '@/lib'
 import { ResError } from '~'
 
 export const validate =
@@ -40,7 +40,7 @@ export const verifyToken: RequestHandler<
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_KEY) as jwt.JwtPayload
+    const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload
     res.locals.userId = decoded.userId
 
     next()

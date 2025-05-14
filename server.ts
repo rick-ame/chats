@@ -6,13 +6,12 @@ import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 
+import { checkEnv, connectDB, logger, PORT } from '@/lib'
+import { routes as authRoutes } from '@/routes/auth'
+import { routes as contactRoutes } from '@/routes/contact'
+import { routes as userRoutes } from '@/routes/user'
+import { setupSocket } from '@/socket'
 import { prefix } from '~'
-
-import { checkEnv, connectDB, logger, PORT } from './lib'
-import { routes as authRoutes } from './routes/auth'
-import { routes as contactRoutes } from './routes/contact'
-import { routes as userRoutes } from './routes/user'
-import { setupSocket } from './socket'
 
 try {
   checkEnv()
@@ -24,7 +23,7 @@ try {
 const app = express()
 const server = createServer(app)
 
-const staticFiles = path.resolve(import.meta.dirname, '../public')
+const staticFiles = path.resolve(import.meta.dirname, './public')
 app.use(express.static(staticFiles))
 
 app.use(cookieParser())
@@ -40,7 +39,7 @@ app.use(prefix, contactRoutes)
 
 setupSocket(server)
 
-app.get('/*splat', (req, res) => {
+app.get('/*splat', (_req, res) => {
   res.sendFile(path.join(staticFiles, 'index.html'))
 })
 

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { FC, useEffect, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 

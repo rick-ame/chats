@@ -1,5 +1,5 @@
 import { useLottie } from 'lottie-react'
-import { FC } from 'react'
+import { type FC } from 'react'
 
 import lottieData from '@/assets/lottie.json'
 

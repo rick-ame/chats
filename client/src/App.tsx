@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense, useEffect } from 'react'
+import { type FC, lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Navigate, useRoutes } from 'react-router'
 
 import { Authed, Private, Setup } from './components/auth'

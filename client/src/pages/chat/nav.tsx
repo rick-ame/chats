@@ -6,7 +6,7 @@ import {
   ShieldCheck,
   SquarePen,
 } from 'lucide-react'
-import { FC, lazy, Suspense, useState } from 'react'
+import { type FC, lazy, Suspense, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 
@@ -24,7 +24,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useAuthStore, useContactStore } from '@/store'
-import { ResUser } from '~'
+import { type ResUser } from '~'
 
 import { ChatAvatar } from './chat-avatar'
 

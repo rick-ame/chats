@@ -3,7 +3,7 @@ import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_KEY, logger } from '@/lib'
+import { JWT_SECRET, logger } from '@/lib'
 import { Locals } from '@/middlewares'
 import { UserModel } from '@/models/user'
 import {
@@ -18,7 +18,7 @@ import {
 const maxAge = 1000 * 60 * 60 * 24 * 3
 
 const createToken = (email: string, userId: string) => {
-  return jwt.sign({ email, userId }, JWT_KEY, { expiresIn: maxAge })
+  return jwt.sign({ email, userId }, JWT_SECRET, { expiresIn: maxAge })
 }
 
 export const signup: RequestHandler<
@@ -109,7 +109,7 @@ export const login: RequestHandler<
 }
 
 export const logout: RequestHandler<unknown, { message: string }> = async (
-  req,
+  _req,
   res,
 ) => {
   try {

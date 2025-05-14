@@ -2,7 +2,13 @@ import { io, Socket } from 'socket.io-client'
 import { create } from 'zustand'
 
 import { apiClient, handleError } from '@/lib/api-client'
-import { ContactApi, Message, ResMessage, ResUser, SocketEvent } from '~'
+import {
+  ContactApi,
+  type Message,
+  type ResMessage,
+  type ResUser,
+  SocketEvent,
+} from '~'
 
 interface ContactStore {
   setup: boolean

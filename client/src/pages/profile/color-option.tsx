@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react'
-import { CSSProperties, FC } from 'react'
+import { type CSSProperties, type FC } from 'react'
 
 import { useThemeColor } from '@/components/providers'
 import { Button } from '@/components/ui/button'

@@ -9,7 +9,7 @@ const PORT = 8000
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-    outDir: '../server/dist/public',
+    outDir: '../dist/public',
     emptyOutDir: true,
   },
   plugins: [react(), tailwindcss()],

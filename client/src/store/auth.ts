@@ -7,7 +7,7 @@ import {
   extendedUpdateSchema,
   loginSchema,
   resetPasswordSchema,
-  ResUser,
+  type ResUser,
   signupSchema,
   updateProfileScheme,
   UserApi,

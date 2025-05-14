@@ -1,22 +1,36 @@
 {
+  "name": "chats",
   "private": true,
   "type": "module",
+  "version": "0.1.0",
   "scripts": {
     "clean": "rimraf server/dist",
     "dev:client": "pnpm --filter client dev",
-    "dev:server": "pnpm --filter server dev",
-    "build": "pnpm -r build",
+    "dev:server": "tsx watch server.ts",
+    "build:client": "pnpm --filter client build",
+    "build:server": "tsc -b && tsc-alias",
+    "build": "pnpm clean && pnpm build:server & pnpm build:client",
     "lint": "eslint .",
-    "start": "pnpm clean && pnpm build && pnpm --filter server start"
+    "start": "node dist/server.js"
   },
   "license": "MIT",
-  "packageManager": "pnpm@10.10.0",
   "dependencies": {
+    "argon2": "^0.43.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.3",
+    "socket.io": "^4.8.1",
+    "winston": "^3.17.0",
     "zod": "^3.24.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
-    "@types/node": "^22.15.17",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.18",
     "eslint": "^9.26.0",
     "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
@@ -29,6 +43,8 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "rimraf": "^6.0.1",
     "simple-git-hooks": "^2.13.0",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
   },

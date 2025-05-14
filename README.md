@@ -21,8 +21,8 @@ Highlights:
 
 ```
 PORT=8000
-DATABASE_URI=your_mongodb_uri
-JWT_KEY=your_jwt_key
+DATABASE_URL=your_mongodb_url
+JWT_SECRET=your_jwt_secret
 ```
 
 ## 🎯 Develop and Run the Project

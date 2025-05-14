@@ -13,7 +13,7 @@ export const getContacts: RequestHandler<
   unknown,
   unknown,
   Locals
-> = async (req, res) => {
+> = async (_req, res) => {
   try {
     const userId = res.locals.userId
 

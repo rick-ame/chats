@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Lock } from 'lucide-react'
-import { FC } from 'react'
+import { type FC } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
@@ -16,8 +16,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
-import { ResetPasswordForm, useAuthStore } from '@/store'
-import { ClientErrorCode, ResError, resetPasswordSchema } from '~'
+import { type ResetPasswordForm, useAuthStore } from '@/store'
+import { ClientErrorCode, type ResError, resetPasswordSchema } from '~'
 
 const ResetPassword: FC = () => {
   const { loading, resetPassword } = useAuthStore()

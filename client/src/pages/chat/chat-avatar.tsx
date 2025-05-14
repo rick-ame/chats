@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'

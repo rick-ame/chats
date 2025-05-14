@@ -1,12 +1,12 @@
 export const PORT = process.env.PORT || 8000
-export const DATABASE_URI = process.env.DATABASE_URI as string
-export const JWT_KEY = process.env.JWT_KEY as string
+export const DATABASE_URL = process.env.DATABASE_URL as string
+export const JWT_SECRET = process.env.JWT_SECRET as string
 
 export const checkEnv = () => {
-  if (!DATABASE_URI) {
-    throw new Error('env DATABASE_URI is required!')
+  if (!DATABASE_URL) {
+    throw new Error('env DATABASE_URL is required!')
   }
-  if (!JWT_KEY) {
-    throw new Error('env JWT_KEY is required!')
+  if (!JWT_SECRET) {
+    throw new Error('env JWT_SECRET is required!')
   }
 }

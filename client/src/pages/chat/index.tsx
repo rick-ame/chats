@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { FC } from 'react'
+import { type FC } from 'react'
 
 import { Detail } from './detail'
 import { Dialogue } from './dialogue'

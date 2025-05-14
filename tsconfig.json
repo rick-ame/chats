@@ -1,15 +1,33 @@
 {
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "target": "ESNext",
+    "lib": ["ES2023"],
+    "module": "ESNext",
     "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "outDir": "./dist",
 
     /* Linting */
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
     "paths": {
+      "@/*": ["./server/*"],
       "~": ["./shared"]
     }
+  },
+  "include": ["server", "shared", "server.ts"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
   }
 }

@@ -1,6 +1,6 @@
-import { Loader, LucideIcon } from 'lucide-react'
-import { motion, MotionProps } from 'motion/react'
-import { ComponentProps, FC, PropsWithChildren } from 'react'
+import { Loader, type LucideIcon } from 'lucide-react'
+import { motion, type MotionProps } from 'motion/react'
+import type { ComponentProps, FC, PropsWithChildren } from 'react'
 
 import { cn } from '@/lib/utils'
 

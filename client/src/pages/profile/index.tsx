@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Loader, Mail, UserRound } from 'lucide-react'
 import { motion } from 'motion/react'
-import { FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { handleError } from '@/lib/api-client'
-import { UpdateProfileForm, useAuthStore } from '@/store'
+import { type UpdateProfileForm, useAuthStore } from '@/store'
 import { Color, updateProfileScheme } from '~'
 
 import { ColorOption } from './color-option'

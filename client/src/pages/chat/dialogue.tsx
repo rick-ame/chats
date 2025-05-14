@@ -1,5 +1,5 @@
 import { MessageSquareText, Send, X } from 'lucide-react'
-import { FC, useState } from 'react'
+import { type FC, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

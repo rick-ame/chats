@@ -1,8 +1,8 @@
 import { ThemeProvider } from 'next-themes'
 import {
   createContext,
-  FC,
-  PropsWithChildren,
+  type FC,
+  type PropsWithChildren,
   use,
   useEffect,
   useLayoutEffect,
