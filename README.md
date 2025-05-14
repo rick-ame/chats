@@ -4,13 +4,12 @@
 
 Highlights:
 
-- 🌐 Real-time Messaging with Typing Indicators & Reactions
-- 📹 1-on-1 and Group Chats
+- 🌐 Real-time Messaging
 - 🔐 JWT Authentication & Protected Routes
 - ⚡ Tech Stack: React + Express + MongoDB + TailwindCSS + Shadcn/ui + Typescript
 - 🧠 Global State Management with Zustand
 - 🚨 Error Handling (Frontend & Backend)
-- 🚀 Free Deployment
+- 🚀 Free Deployment with Docker
 - ⏳ And much more!
 
 ---
@@ -57,4 +56,10 @@ pnpm build # Output folder at `dist`, frontend resources at `dist/public`
 
 ```sh
 pnpm start # Project runs on `http://localhost:8000/`
+```
+
+## 🐳 Containerizing
+
+```sh
+docker-compose up
 ```
