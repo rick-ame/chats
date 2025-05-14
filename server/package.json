@@ -14,7 +14,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.14.1",
+    "mongoose": "^8.14.3",
     "socket.io": "^4.8.1",
     "winston": "^3.17.0"
   },
@@ -22,7 +22,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
-    "tsc-alias": "^1.8.15",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.19.4"
   }
 }
