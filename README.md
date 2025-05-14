@@ -18,8 +18,10 @@ Highlights:
 
 ### Backend
 
+Database [MongoDB Atlas](https://www.mongodb.com/) is recommended.
+
 ```
-PORT=8000
+PORT=8000 # You should keep it the same as Vite proxy port
 DATABASE_URL=your_mongodb_url
 JWT_SECRET=your_jwt_secret
 ```
