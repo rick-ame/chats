@@ -96,6 +96,11 @@ export const useContactStore = create<ContactStore>()((set, get) => ({
     get()._socket?.disconnect()
     set({
       _socket: null,
+      setup: true,
+      contacts: null,
+      currentChattingWith: null,
+      messagesMap: new Map(),
+      messages: null,
     })
   },
 

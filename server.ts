@@ -39,6 +39,10 @@ app.use(prefix, contactRoutes)
 
 setupSocket(server)
 
+app.get('/healthcheck', (_req, res) => {
+  res.status(200).end('Hi!')
+})
+
 app.get('/*splat', (_req, res) => {
   res.sendFile(path.join(staticFiles, 'index.html'))
 })
