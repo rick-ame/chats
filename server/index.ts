@@ -23,7 +23,7 @@ try {
 const app = express()
 const server = createServer(app)
 
-const staticFiles = path.resolve(import.meta.dirname, './public')
+const staticFiles = path.resolve(import.meta.dirname, '../public')
 app.use(express.static(staticFiles))
 
 app.use(cookieParser())

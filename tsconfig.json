@@ -25,7 +25,7 @@
       "~": ["./shared"]
     }
   },
-  "include": ["server", "shared", "server.ts"],
+  "include": ["server", "shared"],
   "tsc-alias": {
     "resolveFullPaths": true,
     "verbose": false
