@@ -1,22 +1,20 @@
-# Step: build frontend
-FROM node:22-alpine AS builder-fe
-RUN corepack enable
-
-WORKDIR /app
-
-COPY . .
-
-RUN pnpm install --frozen-lockfile
-
-RUN pnpm build:client
-
-# Step: build backend
-FROM node:22-alpine AS builder-be
+FROM node:22-alpine AS base
 RUN corepack enable
 
 WORKDIR /app
 
 COPY package.json pnpm-*.yaml ./
+
+# Step: build frontend
+FROM base AS build-fe
+
+COPY . .
+
+RUN pnpm install --frozen-lockfile && \
+  pnpm build:client
+
+# Step: build backend
+FROM base AS build-be
 
 RUN pnpm install --frozen-lockfile
 
@@ -25,25 +23,23 @@ COPY . .
 RUN pnpm build:server
 
 # Step: prod
-FROM node:22-alpine
-RUN corepack enable
-
-WORKDIR /app
-
-COPY --from=builder-fe /app/dist ./dist
-COPY --from=builder-be /app/dist ./dist
-COPY --from=builder-be /app/package.json ./
-COPY --from=builder-be /app/pnpm-*.yaml ./
+FROM base AS prod
 
 RUN pnpm install --prod --frozen-lockfile
 
+COPY --from=build-fe /app/dist ./dist
+COPY --from=build-be /app/dist ./dist
+
 # add user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN apk add --no-cache curl && \
+  addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
-EXPOSE 8000
+ENV PORT=8000
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:8000/healthcheck || exit 1
+EXPOSE ${PORT}
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:${PORT}/healthcheck || exit 1
 
 CMD ["pnpm", "start"]

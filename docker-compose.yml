@@ -4,14 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "${PORT:-8000}:${PORT:-8000}"
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
+      PORT: "${PORT:-8000}"
+      DATABASE_URL: ${DATABASE_URL?err}
+      JWT_SECRET: ${JWT_SECRET?err}
     env_file:
       - .env
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
