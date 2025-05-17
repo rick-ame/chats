@@ -7,7 +7,8 @@ services:
       - "${PORT:-8000}:${PORT:-8000}"
     environment:
       PORT: "${PORT:-8000}"
-      DATABASE_URL: ${DATABASE_URL?err}
-      JWT_SECRET: ${JWT_SECRET?err}
+      DATABASE_URL: "${DATABASE_URL?err}"
+      JWT_SECRET: "${JWT_SECRET?err}"
     env_file:
       - .env
+    restart: unless-stopped
