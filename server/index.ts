@@ -39,7 +39,7 @@ app.use(prefix, contactRoutes)
 
 setupSocket(server)
 
-app.get('/healthcheck', (_req, res) => {
+app.get('/health', (_req, res) => {
   res.status(200).end('Hi!')
 })
 
